@@ -1,6 +1,5 @@
 package es.alfmarmes.squaregame.screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -12,23 +11,23 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-
 import es.alfmarmes.squaregame.SquareGame;
+import es.alfmarmes.squaregame.escenas.Hud;
 import es.alfmarmes.squaregame.sprites.Cuadrado;
 
-public class GameOverScreen implements Screen {
-
-    private final Cuadrado.Personaje personaje;
+public class PantallaGanar implements Screen {
     private Viewport viewport;
     private Stage stage;
 
+    private Cuadrado.Personaje personaje;
+
     private SquareGame game;
 
-    public GameOverScreen(SquareGame game, Cuadrado.Personaje personajeSeleccionado) {
+    public PantallaGanar(SquareGame game, Cuadrado.Personaje personaje) {
         this.game = game;
         this.viewport = new FitViewport(SquareGame.V_ANCHO, SquareGame.V_ALTO);
         this.stage = new Stage(this.viewport, ((SquareGame) game).batch);
-        this.personaje = personajeSeleccionado;
+        this.personaje = personaje;
         Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
 
         Table table = new Table();
@@ -36,10 +35,14 @@ public class GameOverScreen implements Screen {
         table.center();
         table.setFillParent(true);
 
-        Label gameOverLabel = new Label("GAME OVER", font);
-        Label playAgainLabel = new Label("Click to Play Again", font);
+
+        Label gameOverLabel = new Label("¡¡¡Has Ganado "+Cuadrado.nomberPersonaje(personaje)+"!!!", font);
+        Label puntuacionLabel = new Label(Hud.getScore()+" puntos", font);
+        Label playAgainLabel = new Label("Click para volver al menu", font);
 
         table.add(gameOverLabel).expandX();
+        table.row();
+        table.add(puntuacionLabel).expandX().padTop(10f);
         table.row();
         table.add(playAgainLabel).expandX().padTop(10f);
 
@@ -55,11 +58,11 @@ public class GameOverScreen implements Screen {
     public void render(float delta) {
         // Listener para volver al inicio del nivel
         if (Gdx.input.justTouched()) {
-            game.setScreen(new PantallaDeJuego(game, this.personaje));
+            game.setScreen(new MenuInicio(game));
             dispose();
         }
 
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClearColor(1, 1, 0, 0.5f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.draw();
     }

@@ -1,5 +1,6 @@
 package es.alfmarmes.squaregame.sprites;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -15,19 +16,38 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 
 import es.alfmarmes.squaregame.SquareGame;
+import es.alfmarmes.squaregame.escenas.Hud;
 import es.alfmarmes.squaregame.screens.PantallaDeJuego;
 
 public class Cuadrado extends Sprite {
-    private static final int VIDAS_INICIO = 5;
+    public static final int VIDAS_INICIO = 5;
     private static final int I_IMG_PARADO = 0;
     private static final int I_IMG_SALTANDO = 4;
     private static final int I_IMG_FIN = 5;
 
+    public static Personaje personajeSeleccionado;
 
-    private int vidas;
+    /**
+     * Devuelve el nombre el  personaje cuya enumeración es igual a personaje
+     * @param personaje enumeración del personaje
+     * @return nombre del personaje
+     */
+    public static String nomberPersonaje(Personaje personaje) {
+        String devolver;
+        if(personaje == Personaje.ARMANDO){
+            devolver = "ARMANDO";
+        }else {
+            devolver = "EDUARDO";
+        }
+        return devolver;
+    }
+
 
     public enum Estado {
         FALLING, JUMPING, STANDING, RUNNING, MUERTO, CAMBIANDO
+    }
+    public enum Personaje {
+        EDUARDO, ARMANDO
     }
 
     public World mundo;
@@ -35,6 +55,7 @@ public class Cuadrado extends Sprite {
 
     public Estado estadoActual;
     public Estado estadoAnterior;
+
 
 
     private boolean corriendoDerecha;
@@ -54,6 +75,7 @@ public class Cuadrado extends Sprite {
     private TextureRegion marioJump;
     private Animation correr;
     private TextureRegion cuadradoMuerto;
+    private int vidas;
 
 
     // Animaciones de cuadrado con casco
@@ -71,7 +93,7 @@ public class Cuadrado extends Sprite {
 
 //    private Array<FireBall> fireballs;
 
-    public Cuadrado(PantallaDeJuego pantallaDeJuego, int maxSaltos) {
+    public Cuadrado(PantallaDeJuego pantallaDeJuego, Cuadrado.Personaje personaje) {
         this.pantallaDeJuego = pantallaDeJuego;
         this.mundo = pantallaDeJuego.getMundo();
         this.vidas = VIDAS_INICIO;
@@ -79,17 +101,19 @@ public class Cuadrado extends Sprite {
         this.estadoAnterior = Estado.STANDING;
         this.contadorEstado = 0;
         this.corriendoDerecha = true;
-        this.maxSaltos = maxSaltos;
         this.numeroSaltos = 0;
 
 
         Array<TextureRegion> frames = new Array<>();
         String cuadrado;
         String casco;
-        if (maxSaltos > 1) {
+        personajeSeleccionado = personaje;
+        if (personajeSeleccionado == Personaje.ARMANDO) {
+            this.maxSaltos = 2 ;
             cuadrado = "armando";
             casco = "armando_casco";
         } else {
+            this.maxSaltos = 1;
             cuadrado = "cuadrado";
             casco = "cuadrado_casco";
         }
@@ -168,20 +192,40 @@ public class Cuadrado extends Sprite {
         return maxSaltos;
     }
 
+    public float getUltimaX() {
+        return ultimaX;
+    }
+
+    public void setUltimaX(float ultimaX) {
+        this.ultimaX = ultimaX;
+    }
+
+    public float getUltimaY() {
+        return ultimaY;
+    }
+
+    public void setUltimaY(float ultimaY) {
+        this.ultimaY = ultimaY;
+    }
+
     //-------------------------------------Métodos-------------------------------------
 
     /**
      * Suma un salto al número de saltos
      */
     public void sumarSalto() {
-        this.numeroSaltos++;
+        if (numeroSaltos < maxSaltos){
+            this.numeroSaltos++;
+        }
     }
 
     /**
      * Resta un salto al número de saltos
      */
     public void devolverSalto() {
-        this.numeroSaltos--;
+        if (numeroSaltos > 0){
+            this.numeroSaltos--;
+        }
     }
 
     /**
@@ -324,7 +368,8 @@ public class Cuadrado extends Sprite {
                 SquareGame.PINCHOS_BIT |
                 SquareGame.ENEMIGO_BIT |
                 SquareGame.CABEZA_ENEMIGO_BIT |
-                SquareGame.OBJETO_BIT;
+                SquareGame.OBJETO_BIT |
+        SquareGame.CONTROL_BIT;
 
 
         cuerpo.createFixture(fdef).setUserData(this);
@@ -348,6 +393,7 @@ public class Cuadrado extends Sprite {
             tieneCasco = true;
             SquareGame.manager.get(SquareGame.R_MEJORA).play();
         } else {
+            Hud.actualizarVidas(vidas);
             vidas++;
         }
     }
@@ -359,7 +405,8 @@ public class Cuadrado extends Sprite {
     }
 
     public void die() {
-        if (!muerto) {
+        Gdx.app.log("Hola",vidas+", "+muerto);
+        if (!muerto && (vidas == 0 || pantallaDeJuego.getHud().isTimeUp())) {
 
             SquareGame.manager.get(SquareGame.R_MUSICA).stop();
             SquareGame.manager.get(SquareGame.R_MUERTE).play();
@@ -372,6 +419,10 @@ public class Cuadrado extends Sprite {
             }
 
             cuerpo.applyLinearImpulse(new Vector2(0, 4f), cuerpo.getWorldCenter(), true);
+        } else {
+            Hud.actualizarVidas(vidas);
+          vidas --;
+          setPosition(ultimaX, ultimaY);
         }
     }
 
@@ -384,6 +435,7 @@ public class Cuadrado extends Sprite {
         } else {
             die();
         }
+        devolverSalto();
 
 
 //        }

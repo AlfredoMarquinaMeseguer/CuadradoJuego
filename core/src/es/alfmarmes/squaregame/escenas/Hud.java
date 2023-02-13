@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import es.alfmarmes.squaregame.SquareGame;
+import es.alfmarmes.squaregame.sprites.Cuadrado;
 
 public class Hud implements Disposable {
     public Stage stage;
@@ -24,7 +25,7 @@ public class Hud implements Disposable {
     Label countdownLabel;
     static Label scoreLabel;
     Label timeLabel;
-    Label levelLabel;
+    static Label vidasLabel;
     Label worldLabel;
     Label marioLabel;
 
@@ -42,18 +43,24 @@ public class Hud implements Disposable {
         Table table = new Table();
         table.top();
         table.setFillParent(true);
+        String personaje;
+        if (Cuadrado.personajeSeleccionado == Cuadrado.Personaje.ARMANDO){
+            personaje = "ARMANDO";
+        }else{
+            personaje = "EDUARDO";
+        }
 
         this.countdownLabel = new Label(String.format("%03d", worldTimer),
                 new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        this.scoreLabel = new Label(String.format("%06d", score),
+        scoreLabel = new Label(String.format("%06d", score),
                 new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         this.timeLabel = new Label("TIME",
                 new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        this.levelLabel = new Label("1-1",
+        vidasLabel = new Label(Cuadrado.VIDAS_INICIO+"",
                 new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        this.worldLabel = new Label("WORLD",
+        this.worldLabel = new Label("TOQUES",
                 new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        this.marioLabel = new Label("MARIO",
+        this.marioLabel = new Label(personaje,
                 new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
         table.add(marioLabel).expandX().padTop(10);
@@ -62,10 +69,14 @@ public class Hud implements Disposable {
 
         table.row();
         table.add(scoreLabel).expandX().padTop(0);
-        table.add(levelLabel).expandX().padTop(0);
+        table.add(vidasLabel).expandX().padTop(0);
         table.add(countdownLabel).expandX().padTop(0);
 
         stage.addActor(table);
+    }
+
+    public static int getScore() {
+        return  score;
     }
 
     //-------------------------------------Métodos-------------------------------------
@@ -82,6 +93,9 @@ public class Hud implements Disposable {
     public static void addScore(int value){
         score += value;
         scoreLabel.setText(String.format("%06d", score));
+    }
+    public static void actualizarVidas(int vidas){
+        vidasLabel.setText(String.format("%01d", vidas));
     }
 
     public boolean isTimeUp(){

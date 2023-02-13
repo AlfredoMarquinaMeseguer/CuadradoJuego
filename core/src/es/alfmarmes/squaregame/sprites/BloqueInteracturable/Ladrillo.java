@@ -24,9 +24,9 @@ public class Ladrillo extends BloqueInteractuable {
     }
 
     @Override
-    public void onHeadHit(Cuadrado mario) {
+    public void toque(Cuadrado jugador) {
         //Gdx.app.log("Brick","Le has dado al brick");
-        if (mario.isTieneCasco()){
+        if (jugador.isTieneCasco()){
             setCategoryFilter(SquareGame.DESTROYED_BIT);
             getCell().setTile(null);
             Hud.addScore(200);

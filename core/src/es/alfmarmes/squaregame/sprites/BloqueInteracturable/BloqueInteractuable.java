@@ -76,7 +76,7 @@ public abstract class BloqueInteractuable {
         fixture = body.createFixture(fdef);
     }
 
-    public  abstract  void  onHeadHit(Cuadrado mario);
+    public  abstract  void toque(Cuadrado jugador);
     public void setCategoryFilter(short filterBit){
         Filter filter = new Filter();
         filter.categoryBits = filterBit;

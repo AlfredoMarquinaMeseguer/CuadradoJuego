@@ -15,6 +15,7 @@ import es.alfmarmes.squaregame.SquareGame;
 import es.alfmarmes.squaregame.screens.PantallaDeJuego;
 import es.alfmarmes.squaregame.sprites.BloqueInteracturable.Ladrillo;
 import es.alfmarmes.squaregame.sprites.BloqueInteracturable.BloqueMoneda;
+import es.alfmarmes.squaregame.sprites.BloqueInteracturable.PuntoControl;
 import es.alfmarmes.squaregame.sprites.Enemigos.Triangulo;
 
 public class B2CreadorDelMundo {
@@ -81,6 +82,11 @@ public class B2CreadorDelMundo {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             goombas.add(new Triangulo(pantallaDeJuego, rect.getX()/SquareGame.PPM,
                     rect.getY()/SquareGame.PPM));
+        }
+
+        // Crear Checkpoints
+        for (MapObject object:map.getLayers().get(7).getObjects().getByType(RectangleMapObject.class)){
+            new PuntoControl(pantallaDeJuego, object);
         }
 
 

@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 
 import es.alfmarmes.squaregame.SquareGame;
+import es.alfmarmes.squaregame.sprites.BloqueInteracturable.PuntoControl;
 import es.alfmarmes.squaregame.sprites.Cuadrado;
 import es.alfmarmes.squaregame.sprites.Enemigos.Enemigo;
 import es.alfmarmes.squaregame.sprites.BloqueInteracturable.BloqueInteractuable;
@@ -29,10 +30,10 @@ public class ContactListenerDeMundo implements ContactListener {
             case SquareGame.CABEZA_CUADRADO_BIT | SquareGame.COIN_BIT:
                 if (categoriaDeA == SquareGame.CABEZA_CUADRADO_BIT) {
                     ((BloqueInteractuable) fixB.getUserData()).
-                            onHeadHit((Cuadrado) fixA.getUserData());
+                            toque((Cuadrado) fixA.getUserData());
                 } else {
                     ((BloqueInteractuable) fixA.getUserData()).
-                            onHeadHit((Cuadrado) fixB.getUserData());
+                            toque((Cuadrado) fixB.getUserData());
                 }
                 break;
             case SquareGame.CUADRADO_BIT | SquareGame.BRICK_BIT:
@@ -41,6 +42,13 @@ public class ContactListenerDeMundo implements ContactListener {
                     ((Cuadrado) fixA.getUserData()).devolverSalto();
                 } else {
                     ((Cuadrado) fixB.getUserData()).devolverSalto();
+                }
+                break;
+            case SquareGame.CUADRADO_BIT | SquareGame.CONTROL_BIT:
+                if (categoriaDeA == SquareGame.CONTROL_BIT) {
+                    ((PuntoControl) fixA.getUserData()).toque((Cuadrado) fixB.getUserData());
+                } else {
+                    ((PuntoControl) fixB.getUserData()).toque((Cuadrado) fixA.getUserData());
                 }
                 break;
             case SquareGame.CUADRADO_BIT | SquareGame.CABEZA_ENEMIGO_BIT:
@@ -71,6 +79,7 @@ public class ContactListenerDeMundo implements ContactListener {
             case SquareGame.CUADRADO_BIT | SquareGame.PINCHOS_BIT:
                 if (categoriaDeA == SquareGame.CUADRADO_BIT) {
                     ((Cuadrado) fixA.getUserData()).hit();
+
                 } else {
                     ((Cuadrado) fixB.getUserData()).hit();
                 }

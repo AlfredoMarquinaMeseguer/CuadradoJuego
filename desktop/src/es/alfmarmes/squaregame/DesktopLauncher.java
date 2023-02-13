@@ -9,7 +9,7 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
-		config.setTitle("Square Game");
+		config.setTitle("Cuadrado Saltar\u00EDn con M\u00FAsica de Linkin Park");
 		new Lwjgl3Application(new SquareGame(), config);
 	}
 }

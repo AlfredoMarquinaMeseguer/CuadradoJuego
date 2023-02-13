@@ -31,6 +31,8 @@ import es.alfmarmes.squaregame.tools.ContactListenerDeMundo;
 
 public class PantallaDeJuego implements Screen {
 
+
+
     private final Music musica;
     private SquareGame game;
     private TextureAtlas atlas;
@@ -55,16 +57,17 @@ public class PantallaDeJuego implements Screen {
     // Objetos
     private Array<Objeto> consumible;
     private LinkedBlockingQueue<DefObjeto> consumiblesAparecer;
+    private boolean ganado;
 
-    public PantallaDeJuego(SquareGame game) {
+    public PantallaDeJuego(SquareGame game, Cuadrado.Personaje personajeSeleccionado) {
         this.atlas = new TextureAtlas("tileset/enemigosyobjeto.atlas");
+
 
         this.game = game;
         camaraJuego = new OrthographicCamera();
         puerto = new FitViewport(SquareGame.V_ANCHO / SquareGame.PPM,
                 SquareGame.V_ALTO / SquareGame.PPM, camaraJuego);
 
-        hud = new Hud(game.batch);
 
         // Cargar mapa de juego y setup el renderizador
         mapLoader = new TmxMapLoader();
@@ -82,10 +85,11 @@ public class PantallaDeJuego implements Screen {
 
         creadorDelMundo = new B2CreadorDelMundo(this);
 
-        // Mario
-        jugador = new Cuadrado(this, 2);
+// Mario
+        this.jugador = new Cuadrado(this, personajeSeleccionado);
 
         mundo.setContactListener(new ContactListenerDeMundo());
+        hud = new Hud(game.batch);
 
         // Música
         musica = SquareGame.manager.get(SquareGame.R_MUSICA);
@@ -94,6 +98,7 @@ public class PantallaDeJuego implements Screen {
 
         consumible = new Array<>();
         consumiblesAparecer = new LinkedBlockingQueue<>();
+        ganado = false;
     }
 
     //-------------------------------------Getters y setters-------------------------------------
@@ -217,10 +222,21 @@ public class PantallaDeJuego implements Screen {
         hud.stage.draw();
 
         if (gameOver()){
-            game.setScreen(new GameOverScreen(game));
-            dispose();
+            perder();
+        } else if (ganado) {
+            ganar();
         }
 
+    }
+
+    private void ganar() {
+        game.setScreen(new PantallaGanar(game, Cuadrado.personajeSeleccionado));
+        dispose();
+    }
+
+    private void perder() {
+        game.setScreen(new GameOverScreen(game, Cuadrado.personajeSeleccionado));
+        dispose();
     }
 
     /**
@@ -268,5 +284,9 @@ public class PantallaDeJuego implements Screen {
         mundo.dispose();
         b2dr.dispose();
         hud.dispose();
+    }
+
+    public void setGanado(boolean b) {
+        this.ganado = b;
     }
 }

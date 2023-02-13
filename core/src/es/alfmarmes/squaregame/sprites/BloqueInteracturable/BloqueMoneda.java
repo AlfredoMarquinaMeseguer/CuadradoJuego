@@ -51,7 +51,7 @@ public class BloqueMoneda extends BloqueInteractuable {
 
      }*/
     @Override
-    public void onHeadHit(Cuadrado mario) {
+    public void toque(Cuadrado jugador) {
         if (getCell().getTile().getId() == BLOQUE_VACIO_ID)
             SquareGame.manager.get(SquareGame.R_CHOQUE).play();
         else {

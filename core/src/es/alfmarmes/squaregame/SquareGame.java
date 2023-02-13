@@ -1,13 +1,16 @@
 package es.alfmarmes.squaregame;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
-import es.alfmarmes.squaregame.screens.PantallaDeJuego;
+import es.alfmarmes.squaregame.screens.MenuInicio;
 
 public class SquareGame extends Game {
     /**
@@ -31,6 +34,7 @@ public class SquareGame extends Game {
      */
     public static final float TILE = 16 / PPM;
 
+    public static final String APP = "squareGame";
     //// Bits de colisiones
     public static final short NOTHING_BIT = 0;
     public static final short SUELO_BIT = 1;
@@ -44,7 +48,7 @@ public class SquareGame extends Game {
     public static final short OBJETO_BIT = 256;
     public static final short CABEZA_CUADRADO_BIT = 512;
 
-    public static final short FUEGO_BIT = 1024; // POR VER SI SE USA
+    public static final short CONTROL_BIT = 1024; // POR VER SI SE USA
 
 
     // Utilizarlo de forma estática puede caursar errores
@@ -70,7 +74,17 @@ public class SquareGame extends Game {
             ("audio/sounds/damage.wav", Sound.class);
     public final static AssetDescriptor<Sound> R_MUERTE = new AssetDescriptor<Sound>
             ("audio/sounds/muerte.mp3", Sound.class);
+    private Skin skin;
+    public static final AssetDescriptor<Skin> SKIN = new AssetDescriptor<Skin>("skin/pixthulhu-ui.json", Skin.class,
+            new SkinLoader.SkinParameter("skin/pixthulhu-ui.atlas"));
 
+
+    public Skin getSkin() {
+        if(skin == null ) {
+            skin = new Skin(Gdx.files.internal("skin2/comic-ui.json"));
+        }
+        return skin;
+    }
     @Override
     public void create() {
         batch = new SpriteBatch();
@@ -85,10 +99,11 @@ public class SquareGame extends Game {
         manager.load(R_MEJORA);
         manager.load(R_REDUCCION);
         manager.load(R_MUERTE);
+        manager.load(SKIN);
 
         manager.finishLoading();
 
-        setScreen(new PantallaDeJuego(this));
+        setScreen(new MenuInicio(this));
     }
 
 
