@@ -1,11 +1,10 @@
 package es.alfmarmes.squaregame.sprites.BloqueInteracturable;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapObject;
 
-import es.alfmarmes.squaregame.SquareGame;
 import es.alfmarmes.squaregame.screens.PantallaDeJuego;
 import es.alfmarmes.squaregame.sprites.Cuadrado;
+import es.alfmarmes.squaregame.tools.Constantes;
 
 public class PuntoControl extends BloqueInteractuable {
     private PantallaDeJuego pantallaDeJuego;
@@ -16,24 +15,30 @@ public class PuntoControl extends BloqueInteractuable {
     public PuntoControl(PantallaDeJuego pantallaDeJuego, MapObject object) {
         super(pantallaDeJuego, object);
         this.pantallaDeJuego = pantallaDeJuego;
-        posicionX = (bounds.getX() + bounds.getWidth() / 2) / SquareGame.PPM;
-        posicionY = ((bounds.getY() + bounds.getHeight() / 2)/ SquareGame.PPM)
-                +  SquareGame.TILE;
+        posicionX = Constantes.escalarAppm(limites.getX() + limites.getWidth() / 2);
+        posicionY = Constantes.escalarAppm(limites.getY() + limites.getHeight() / 2)
+                + Constantes.TILE;
 
         fixture.setUserData(this);
         fixture.setSensor(true);
-        setCategoryFilter(SquareGame.CONTROL_BIT);
+        setFiltroDeCategoria(Constantes.CONTROL_BIT);
     }
 
+    /**
+     * Realiza la acción al tener un toque con el jugador
+     *
+     * @param jugador objeto jugador
+     */
     @Override
     public void toque(Cuadrado jugador) {
-        if (object.getProperties().containsKey("ganar")){
+        // Si tiene la propiedad ganar se gana el juego
+        if (objecto.getProperties().containsKey("ganar")) {
             pantallaDeJuego.setGanado(true);
-        }else{
+
+        } else {
+            // Si no la tiene es un punto de control y se guarda la posición
             jugador.setUltimaX(posicionX);
             jugador.setUltimaY(posicionY);
         }
-
-        Gdx.app.log("Control",""+posicionX+", "+posicionY );
     }
 }

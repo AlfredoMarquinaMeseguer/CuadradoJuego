@@ -5,9 +5,9 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 
-import es.alfmarmes.squaregame.SquareGame;
 import es.alfmarmes.squaregame.screens.PantallaDeJuego;
 import es.alfmarmes.squaregame.sprites.Cuadrado;
+import es.alfmarmes.squaregame.tools.Constantes;
 
 public class Seta extends Objeto {
     public Seta(PantallaDeJuego pantallaDeJuego, float x, float y) {
@@ -27,14 +27,14 @@ public class Seta extends Objeto {
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(7 / SquareGame.PPM);
+        shape.setRadius(Constantes.escalarAppm(7));
 
-        fdef.filter.categoryBits = SquareGame.OBJETO_BIT;
-        fdef.filter.maskBits = SquareGame.SUELO_BIT
-                | SquareGame.COIN_BIT
-                | SquareGame.BRICK_BIT
-                | SquareGame.PINCHOS_BIT
-                | SquareGame.CUADRADO_BIT;
+        fdef.filter.categoryBits = Constantes.OBJETO_BIT;
+        fdef.filter.maskBits = Constantes.SUELO_BIT
+                | Constantes.COIN_BIT
+                | Constantes.BRICK_BIT
+                | Constantes.PINCHOS_BIT
+                | Constantes.CUADRADO_BIT;
 
         fdef.shape = shape;
         body.createFixture(fdef).setUserData(this);

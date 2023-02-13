@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import es.alfmarmes.squaregame.SquareGame;
 import es.alfmarmes.squaregame.sprites.Cuadrado;
+import es.alfmarmes.squaregame.tools.Constantes;
 
 public class GameOverScreen implements Screen {
 
@@ -26,8 +27,8 @@ public class GameOverScreen implements Screen {
 
     public GameOverScreen(SquareGame game, Cuadrado.Personaje personajeSeleccionado) {
         this.game = game;
-        this.viewport = new FitViewport(SquareGame.V_ANCHO, SquareGame.V_ALTO);
-        this.stage = new Stage(this.viewport, ((SquareGame) game).batch);
+        this.viewport = new FitViewport(Constantes.V_ANCHO, Constantes.V_ALTO);
+        this.stage = new Stage(this.viewport, game.batch);
         this.personaje = personajeSeleccionado;
         Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
 

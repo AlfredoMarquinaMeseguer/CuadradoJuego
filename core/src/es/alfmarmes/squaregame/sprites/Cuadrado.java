@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.Array;
 import es.alfmarmes.squaregame.SquareGame;
 import es.alfmarmes.squaregame.escenas.Hud;
 import es.alfmarmes.squaregame.screens.PantallaDeJuego;
+import es.alfmarmes.squaregame.tools.Constantes;
 
 public class Cuadrado extends Sprite {
     public static final int VIDAS_INICIO = 5;
@@ -122,14 +123,14 @@ public class Cuadrado extends Sprite {
         TextureRegion cuadradoPequenno = pantallaDeJuego.getAtlas().findRegion(cuadrado);
         TextureRegion cuadradoCasco = pantallaDeJuego.getAtlas().findRegion(casco);
         parado = new TextureRegion(cuadradoPequenno,
-                I_IMG_PARADO, 0, SquareGame.PIXELS_TILE, SquareGame.PIXELS_TILE);
+                I_IMG_PARADO, 0, Constantes.PIXELS_TILE, Constantes.PIXELS_TILE);
         // Con casco
         cascoParado = new TextureRegion(cuadradoCasco, I_IMG_PARADO, 0,
-                SquareGame.PIXELS_TILE, SquareGame.PIXELS_TILE);
+                Constantes.PIXELS_TILE, Constantes.PIXELS_TILE);
         //// Animación de correr sin casco
         for (int i = 0; i < I_IMG_FIN; i++) { // Coger imagenes de la SpriteSheet
-            frames.add(new TextureRegion(cuadradoPequenno, i * SquareGame.PIXELS_TILE, 0,
-                    SquareGame.PIXELS_TILE, SquareGame.PIXELS_TILE));
+            frames.add(new TextureRegion(cuadradoPequenno, i * Constantes.PIXELS_TILE, 0,
+                    Constantes.PIXELS_TILE, Constantes.PIXELS_TILE));
         }
         correr = new Animation<>(0.1f, frames);
         frames.clear();
@@ -137,8 +138,8 @@ public class Cuadrado extends Sprite {
         //// Animación de correr con casco
         for (int i = 0; i < I_IMG_FIN; i++) {
             frames.add(new TextureRegion(cuadradoCasco,
-                    i * SquareGame.PIXELS_TILE, 0,
-                    SquareGame.PIXELS_TILE, SquareGame.PIXELS_TILE));
+                    i * Constantes.PIXELS_TILE, 0,
+                    Constantes.PIXELS_TILE, Constantes.PIXELS_TILE));
         }
 
         cascoCorre = new Animation<>(0.1f, frames);
@@ -146,11 +147,11 @@ public class Cuadrado extends Sprite {
 
         //get jump animation frames and add them to marioJump Animation
         marioJump = new TextureRegion(cuadradoPequenno,
-                I_IMG_SALTANDO * SquareGame.PIXELS_TILE, 0,
-                SquareGame.PIXELS_TILE, SquareGame.PIXELS_TILE);
+                I_IMG_SALTANDO * Constantes.PIXELS_TILE, 0,
+                Constantes.PIXELS_TILE, Constantes.PIXELS_TILE);
         cascoJump = new TextureRegion(cuadradoCasco,
-                I_IMG_SALTANDO * SquareGame.PIXELS_TILE, 0,
-                SquareGame.PIXELS_TILE, SquareGame.PIXELS_TILE);
+                I_IMG_SALTANDO * Constantes.PIXELS_TILE, 0,
+                Constantes.PIXELS_TILE, Constantes.PIXELS_TILE);
 
         //get set animation frames from growing mario
         frames.add(cascoParado);
@@ -165,7 +166,7 @@ public class Cuadrado extends Sprite {
 
 
         definirCuadrado();
-        setBounds(0, 0, SquareGame.TILE, SquareGame.TILE);
+        setBounds(0, 0, Constantes.TILE, Constantes.TILE);
         setRegion(parado);
 
         //fireballs = new Array<FireBall>();
@@ -342,7 +343,7 @@ public class Cuadrado extends Sprite {
     private void definirCuadrado() {
         BodyDef bdef = new BodyDef();
 
-        bdef.position.set(32 / SquareGame.PPM, 32 / SquareGame.PPM); // Temporal
+        bdef.position.set(32 * Constantes.ESCALAR_PPM, 32 * Constantes.ESCALAR_PPM); // Temporal
         bdef.type = BodyDef.BodyType.DynamicBody;
 
         //// Creamos un sitio
@@ -352,7 +353,7 @@ public class Cuadrado extends Sprite {
         FixtureDef fdef = new FixtureDef();
         // Establecemos las forma de colisión como un circulo y lo definimos
         CircleShape forma = new CircleShape();
-        forma.setRadius(7 / SquareGame.PPM);
+        forma.setRadius(7 * Constantes.ESCALAR_PPM);
         fdef.shape = forma;
 
 
@@ -361,25 +362,25 @@ public class Cuadrado extends Sprite {
             - Categorybits = bit de la categoría a la que pertenece
             - maskBits = categorías con las que colisiona/interactua
          */
-        fdef.filter.categoryBits = SquareGame.CUADRADO_BIT;
-        fdef.filter.maskBits = SquareGame.SUELO_BIT |
-                SquareGame.COIN_BIT |
-                SquareGame.BRICK_BIT |
-                SquareGame.PINCHOS_BIT |
-                SquareGame.ENEMIGO_BIT |
-                SquareGame.CABEZA_ENEMIGO_BIT |
-                SquareGame.OBJETO_BIT |
-        SquareGame.CONTROL_BIT;
+        fdef.filter.categoryBits = Constantes.CUADRADO_BIT;
+        fdef.filter.maskBits = Constantes.SUELO_BIT |
+                Constantes.COIN_BIT |
+                Constantes.BRICK_BIT |
+                Constantes.PINCHOS_BIT |
+                Constantes.ENEMIGO_BIT |
+                Constantes.CABEZA_ENEMIGO_BIT |
+                Constantes.OBJETO_BIT |
+                Constantes.CONTROL_BIT;
 
 
         cuerpo.createFixture(fdef).setUserData(this);
 
         EdgeShape head = new EdgeShape();
-        head.set(new Vector2(-2 / SquareGame.PPM, 7 / SquareGame.PPM),
-                new Vector2(2 / SquareGame.PPM, 7 / SquareGame.PPM));
+        head.set(new Vector2( Constantes.escalarAppm(-2), Constantes.escalarAppm(7)),
+                new Vector2(Constantes.escalarAppm(2) , Constantes.escalarAppm(7) ));
 
 
-        fdef.filter.categoryBits = SquareGame.CABEZA_CUADRADO_BIT;
+        fdef.filter.categoryBits = Constantes.CABEZA_CUADRADO_BIT;
 
         fdef.shape = head;
         fdef.isSensor = true;
@@ -391,7 +392,7 @@ public class Cuadrado extends Sprite {
         if (!tieneCasco) {
             runGrowAnimation = true;
             tieneCasco = true;
-            SquareGame.manager.get(SquareGame.R_MEJORA).play();
+            SquareGame.manager.get(Constantes.R_MEJORA).play();
         } else {
             Hud.actualizarVidas(vidas);
             vidas++;
@@ -401,18 +402,18 @@ public class Cuadrado extends Sprite {
     public void decrecer() {
         runGrowAnimation = true;
         tieneCasco = false;
-        SquareGame.manager.get(SquareGame.R_REDUCCION).play();
+        SquareGame.manager.get(Constantes.R_REDUCCION).play();
     }
 
     public void die() {
         Gdx.app.log("Hola",vidas+", "+muerto);
         if (!muerto && (vidas == 0 || pantallaDeJuego.getHud().isTimeUp())) {
 
-            SquareGame.manager.get(SquareGame.R_MUSICA).stop();
-            SquareGame.manager.get(SquareGame.R_MUERTE).play();
+            SquareGame.manager.get(Constantes.R_MUSICA).stop();
+            SquareGame.manager.get(Constantes.R_MUERTE).play();
             muerto = true;
             Filter filter = new Filter();
-            filter.maskBits = SquareGame.NOTHING_BIT;
+            filter.maskBits = Constantes.NOTHING_BIT;
 
             for (Fixture fixture : cuerpo.getFixtureList()) {
                 fixture.setFilterData(filter);

@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Array;
 
 import es.alfmarmes.squaregame.SquareGame;
 import es.alfmarmes.squaregame.screens.PantallaDeJuego;
+import es.alfmarmes.squaregame.tools.Constantes;
 
 public class Triangulo extends Enemigo {
 
@@ -44,7 +45,7 @@ public class Triangulo extends Enemigo {
 
 
 
-        setBounds(getX(), getY(), 16 / SquareGame.PPM, 16 / SquareGame.PPM);
+        setBounds(getX(), getY(), Constantes.TILE, Constantes.TILE);
         TextureRegion initialState=new TextureRegion(region,
                 32, 0, 16, 16);
         setRegion(initialState);
@@ -85,15 +86,15 @@ public class Triangulo extends Enemigo {
 
         FixtureDef fdef = new FixtureDef();
         CircleShape forma = new CircleShape();
-        forma.setRadius(7 / SquareGame.PPM);
+        forma.setRadius(Constantes.escalarAppm(7));
 
-        fdef.filter.categoryBits = SquareGame.ENEMIGO_BIT;
-        fdef.filter.maskBits = SquareGame.SUELO_BIT
-                | SquareGame.COIN_BIT
-                | SquareGame.BRICK_BIT
-                | SquareGame.PINCHOS_BIT
-                | SquareGame.CUADRADO_BIT
-                | SquareGame.ENEMIGO_BIT;
+        fdef.filter.categoryBits = Constantes.ENEMIGO_BIT;
+        fdef.filter.maskBits = Constantes.SUELO_BIT
+                | Constantes.COIN_BIT
+                | Constantes.BRICK_BIT
+                | Constantes.PINCHOS_BIT
+                | Constantes.CUADRADO_BIT
+                | Constantes.ENEMIGO_BIT;
 
         fdef.shape = forma;
         cuerpo.createFixture(fdef).setUserData(this);
@@ -102,16 +103,16 @@ public class Triangulo extends Enemigo {
         // Creamos el polígono para la cabeza que aplastaremos
         PolygonShape cabeza = new PolygonShape();
         Vector2[] vertice = new Vector2[4];
-        vertice[0] = new Vector2(-8, 10).scl(1 / SquareGame.PPM);
-        vertice[1] = new Vector2(8, 10).scl(1 / SquareGame.PPM);
-        vertice[2] = new Vector2(-3, 3).scl(1 / SquareGame.PPM);
-        vertice[3] = new Vector2(3, 3).scl(1 / SquareGame.PPM);
+        vertice[0] = new Vector2(-8, 10).scl(Constantes.ESCALAR_PPM);
+        vertice[1] = new Vector2(8, 10).scl(Constantes.ESCALAR_PPM);
+        vertice[2] = new Vector2(-3, 3).scl(Constantes.ESCALAR_PPM);
+        vertice[3] = new Vector2(3, 3).scl(Constantes.ESCALAR_PPM);
         cabeza.set(vertice);
         // Definimos el fdef con la cabeza y lo añadimos al cuerpo
         fdef.shape = cabeza;
         fdef.restitution = 0.5f;
-        fdef.filter.categoryBits = SquareGame.CABEZA_ENEMIGO_BIT;
-        fdef.filter.maskBits = SquareGame.CUADRADO_BIT;
+        fdef.filter.categoryBits = Constantes.CABEZA_ENEMIGO_BIT;
+        fdef.filter.maskBits = Constantes.CUADRADO_BIT;
         cuerpo.createFixture(fdef).setUserData(this);
     }
 
@@ -130,6 +131,6 @@ public class Triangulo extends Enemigo {
     public void onHitOnHead() {
         porDestruir = true;
         destruido = false;
-        SquareGame.manager.get(SquareGame.R_BONK).play();
+        SquareGame.manager.get(Constantes.R_BONK).play();
     }
 }

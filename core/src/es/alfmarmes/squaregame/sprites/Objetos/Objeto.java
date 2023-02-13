@@ -6,9 +6,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 
-import es.alfmarmes.squaregame.SquareGame;
 import es.alfmarmes.squaregame.screens.PantallaDeJuego;
 import es.alfmarmes.squaregame.sprites.Cuadrado;
+import es.alfmarmes.squaregame.tools.Constantes;
 
 public abstract class Objeto extends Sprite {
     protected PantallaDeJuego pantallaDeJuego;
@@ -25,7 +25,7 @@ public abstract class Objeto extends Sprite {
         destroyed = false;
 
         setPosition(x,y);
-        setBounds(getX(), getY(),16/ SquareGame.PPM, 16/SquareGame.PPM);
+        setBounds(getX(), getY(), Constantes.TILE, Constantes.TILE);
         definirObjeto();
     }
 
@@ -51,13 +51,18 @@ public abstract class Objeto extends Sprite {
         toDestroy = true;
     }
 
-    public void reverseVelocity(boolean xFlip, boolean yFlip){
+    /**
+     * Cambia la dirección en la que se mueve el objeto según los parametros.
+     * @param xCambio cambiar velocidad horizontal
+     * @param yCambio cambiar velocidad vertical
+     */
+    public void invertirVelocidad(boolean xCambio, boolean yCambio){
         // Cambiar la dirección horizontal
-        if (xFlip){
+        if (xCambio){
             velocidad.x = -velocidad.x;
         }
         // Cambiar la dirección vertical
-        if (yFlip){
+        if (yCambio){
             velocidad.y = -velocidad.y;
         }
     }

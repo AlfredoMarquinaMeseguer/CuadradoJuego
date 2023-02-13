@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import es.alfmarmes.squaregame.SquareGame;
 import es.alfmarmes.squaregame.sprites.Cuadrado;
+import es.alfmarmes.squaregame.tools.Constantes;
 
 public class Hud implements Disposable {
     public Stage stage;
@@ -35,8 +36,8 @@ public class Hud implements Disposable {
         this.timeCount = 0;
         this.score = 0;
 
-        this.viewport = new FitViewport(SquareGame.V_ANCHO, SquareGame
-                .V_ALTO, new OrthographicCamera());
+        this.viewport = new FitViewport(Constantes.V_ANCHO, Constantes.
+                V_ALTO, new OrthographicCamera());
 
         this.stage = new Stage(this.viewport, sb);
 

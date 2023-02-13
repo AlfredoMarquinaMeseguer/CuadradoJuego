@@ -27,6 +27,7 @@ import es.alfmarmes.squaregame.sprites.Objetos.DefObjeto;
 import es.alfmarmes.squaregame.sprites.Objetos.Objeto;
 import es.alfmarmes.squaregame.sprites.Objetos.Seta;
 import es.alfmarmes.squaregame.tools.B2CreadorDelMundo;
+import es.alfmarmes.squaregame.tools.Constantes;
 import es.alfmarmes.squaregame.tools.ContactListenerDeMundo;
 
 public class PantallaDeJuego implements Screen {
@@ -65,14 +66,14 @@ public class PantallaDeJuego implements Screen {
 
         this.game = game;
         camaraJuego = new OrthographicCamera();
-        puerto = new FitViewport(SquareGame.V_ANCHO / SquareGame.PPM,
-                SquareGame.V_ALTO / SquareGame.PPM, camaraJuego);
+        puerto = new FitViewport(Constantes.V_ANCHO / Constantes.PPM,
+                Constantes.V_ALTO / Constantes.PPM, camaraJuego);
 
 
         // Cargar mapa de juego y setup el renderizador
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("tileset/level1plus.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map, 1 / SquareGame.PPM);
+        renderer = new OrthogonalTiledMapRenderer(map, 1 / Constantes.PPM);
 
         // Colocar la camara en el lugar inicial correto
         camaraJuego.position.set(puerto.getWorldWidth() / 2,
@@ -92,7 +93,7 @@ public class PantallaDeJuego implements Screen {
         hud = new Hud(game.batch);
 
         // Música
-        musica = SquareGame.manager.get(SquareGame.R_MUSICA);
+        musica = SquareGame.manager.get(Constantes.R_MUSICA);
         musica.setLooping(true);
         musica.play();
 
@@ -131,7 +132,7 @@ public class PantallaDeJuego implements Screen {
         // Actualizar a los enemigo (Goombas)
         for (Enemigo enemigo : creadorDelMundo.getGoombas()) {
             enemigo.update(dt);
-            if (enemigo.getX() < jugador.getX() + (224 / SquareGame.PPM)) {
+            if (enemigo.getX() < jugador.getX() + (224 * Constantes.ESCALAR_PPM)) {
                 enemigo.cuerpo.setActive(true);
             }
         }

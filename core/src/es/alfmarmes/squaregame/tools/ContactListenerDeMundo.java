@@ -26,9 +26,9 @@ public class ContactListenerDeMundo implements ContactListener {
         int cDef = fixA.getFilterData().categoryBits | fixB.getFilterData().categoryBits;
 
         switch (cDef) {
-            case SquareGame.CABEZA_CUADRADO_BIT | SquareGame.BRICK_BIT:
-            case SquareGame.CABEZA_CUADRADO_BIT | SquareGame.COIN_BIT:
-                if (categoriaDeA == SquareGame.CABEZA_CUADRADO_BIT) {
+            case Constantes.CABEZA_CUADRADO_BIT | Constantes.BRICK_BIT:
+            case Constantes.CABEZA_CUADRADO_BIT | Constantes.COIN_BIT:
+                if (categoriaDeA == Constantes.CABEZA_CUADRADO_BIT) {
                     ((BloqueInteractuable) fixB.getUserData()).
                             toque((Cuadrado) fixA.getUserData());
                 } else {
@@ -36,39 +36,39 @@ public class ContactListenerDeMundo implements ContactListener {
                             toque((Cuadrado) fixB.getUserData());
                 }
                 break;
-            case SquareGame.CUADRADO_BIT | SquareGame.BRICK_BIT:
-            case SquareGame.CUADRADO_BIT | SquareGame.COIN_BIT:
-                if (categoriaDeA == SquareGame.CUADRADO_BIT) {
+            case Constantes.CUADRADO_BIT | Constantes.BRICK_BIT:
+            case Constantes.CUADRADO_BIT | Constantes.COIN_BIT:
+                if (categoriaDeA == Constantes.CUADRADO_BIT) {
                     ((Cuadrado) fixA.getUserData()).devolverSalto();
                 } else {
                     ((Cuadrado) fixB.getUserData()).devolverSalto();
                 }
                 break;
-            case SquareGame.CUADRADO_BIT | SquareGame.CONTROL_BIT:
-                if (categoriaDeA == SquareGame.CONTROL_BIT) {
+            case Constantes.CUADRADO_BIT | Constantes.CONTROL_BIT:
+                if (categoriaDeA == Constantes.CONTROL_BIT) {
                     ((PuntoControl) fixA.getUserData()).toque((Cuadrado) fixB.getUserData());
                 } else {
                     ((PuntoControl) fixB.getUserData()).toque((Cuadrado) fixA.getUserData());
                 }
                 break;
-            case SquareGame.CUADRADO_BIT | SquareGame.CABEZA_ENEMIGO_BIT:
-                if (categoriaDeA == SquareGame.CABEZA_ENEMIGO_BIT) {
+            case Constantes.CUADRADO_BIT | Constantes.CABEZA_ENEMIGO_BIT:
+                if (categoriaDeA == Constantes.CABEZA_ENEMIGO_BIT) {
                     ((Enemigo) fixA.getUserData()).onHitOnHead();
                 } else {
                     ((Enemigo) fixB.getUserData()).onHitOnHead();
                 }
                 break;
-            case SquareGame.SUELO_BIT | SquareGame.ENEMIGO_BIT:
-            case SquareGame.PINCHOS_BIT | SquareGame.ENEMIGO_BIT:
-            case SquareGame.BRICK_BIT | SquareGame.ENEMIGO_BIT:
-                if (categoriaDeA == SquareGame.ENEMIGO_BIT) {
+            case Constantes.SUELO_BIT | Constantes.ENEMIGO_BIT:
+            case Constantes.PINCHOS_BIT | Constantes.ENEMIGO_BIT:
+            case Constantes.BRICK_BIT | Constantes.ENEMIGO_BIT:
+                if (categoriaDeA == Constantes.ENEMIGO_BIT) {
                     ((Enemigo) fixA.getUserData()).reverseVelocity(true, false);
                 } else {
                     ((Enemigo) fixB.getUserData()).reverseVelocity(true, false);
                 }
                 break;
-            case SquareGame.CUADRADO_BIT | SquareGame.ENEMIGO_BIT:
-                if (categoriaDeA == SquareGame.ENEMIGO_BIT &&
+            case Constantes.CUADRADO_BIT | Constantes.ENEMIGO_BIT:
+                if (categoriaDeA == Constantes.ENEMIGO_BIT &&
                         !isDestroy(fixA)) {
                     ((Cuadrado) fixB.getUserData()).hit();
                 } else if (isDestroy(fixB)) {
@@ -76,37 +76,37 @@ public class ContactListenerDeMundo implements ContactListener {
                 }
 
                 break;
-            case SquareGame.CUADRADO_BIT | SquareGame.PINCHOS_BIT:
-                if (categoriaDeA == SquareGame.CUADRADO_BIT) {
+            case Constantes.CUADRADO_BIT | Constantes.PINCHOS_BIT:
+                if (categoriaDeA == Constantes.CUADRADO_BIT) {
                     ((Cuadrado) fixA.getUserData()).hit();
 
                 } else {
                     ((Cuadrado) fixB.getUserData()).hit();
                 }
                 break;
-            case SquareGame.ENEMIGO_BIT://Colision entre enemigos
+            case Constantes.ENEMIGO_BIT://Colision entre enemigos
                 ((Enemigo) fixA.getUserData()).reverseVelocity(true, false);
                 ((Enemigo) fixB.getUserData()).reverseVelocity(true, false);
                 break;
             // En caso de que un objeto se choque con el terreno
-            case SquareGame.SUELO_BIT | SquareGame.OBJETO_BIT:
-            case SquareGame.BRICK_BIT | SquareGame.OBJETO_BIT:
-            case SquareGame.PINCHOS_BIT | SquareGame.OBJETO_BIT:
-                if (categoriaDeA == SquareGame.OBJETO_BIT) {
-                    ((Objeto) fixA.getUserData()).reverseVelocity(true, false);
+            case Constantes.SUELO_BIT | Constantes.OBJETO_BIT:
+            case Constantes.BRICK_BIT | Constantes.OBJETO_BIT:
+            case Constantes.PINCHOS_BIT | Constantes.OBJETO_BIT:
+                if (categoriaDeA == Constantes.OBJETO_BIT) {
+                    ((Objeto) fixA.getUserData()).invertirVelocidad(true, false);
                 } else {
-                    ((Objeto) fixB.getUserData()).reverseVelocity(true, false);
+                    ((Objeto) fixB.getUserData()).invertirVelocidad(true, false);
                 }
                 break;
-            case SquareGame.CUADRADO_BIT | SquareGame.OBJETO_BIT:
-                if (categoriaDeA == SquareGame.OBJETO_BIT) {
+            case Constantes.CUADRADO_BIT | Constantes.OBJETO_BIT:
+                if (categoriaDeA == Constantes.OBJETO_BIT) {
                     ((Objeto) fixA.getUserData()).use((Cuadrado) fixB.getUserData());
                 } else {
                     ((Objeto) fixB.getUserData()).use((Cuadrado) fixA.getUserData());
                 }
                 break;
-            case SquareGame.CUADRADO_BIT | SquareGame.SUELO_BIT:
-                if (categoriaDeA == SquareGame.CUADRADO_BIT) {
+            case Constantes.CUADRADO_BIT | Constantes.SUELO_BIT:
+                if (categoriaDeA == Constantes.CUADRADO_BIT) {
                     ((Cuadrado) fixA.getUserData()).reiniciarSaltos();
                 } else {
                     ((Cuadrado) fixB.getUserData()).reiniciarSaltos();

@@ -14,79 +14,124 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
-import es.alfmarmes.squaregame.SquareGame;
 import es.alfmarmes.squaregame.screens.PantallaDeJuego;
 import es.alfmarmes.squaregame.sprites.Cuadrado;
+import es.alfmarmes.squaregame.tools.Constantes;
 
 public abstract class BloqueInteractuable {
-
-    protected Fixture fixture;
-    protected World world;
-    protected TiledMap map;
-    protected TiledMapTile tile;
-    protected Rectangle bounds;
-    protected Body body;
+    /**
+     * Pantalla de Juego en el que se encuentra el bloque
+     */
     protected PantallaDeJuego pantallaDeJuego;
-    protected MapObject object;
+    /**
+     * Objecto dado por Tiled
+     */
+    protected MapObject objecto;
+    /**
+     * Mundo de en el que existe el bloque
+     */
+    protected World mundo;
+    /**
+     * Mapa en el que se encuentra el bloque
+     */
+    protected TiledMap mapa;
+    // Variables de Box 2d
+    /**
+     * Forma del bloque
+     */
+    protected Rectangle limites;
+    /**
+     * Cuerpo físico de Box 2d del bloque
+     */
+    protected Body cuerpo;
+    /**
+     * Elemento fijo de la
+     */
+    protected Fixture fixture;
+
 
     // Borrar si no se usa
-    public BloqueInteractuable(PantallaDeJuego pantallaDeJuego, Rectangle bounds) {
+    public BloqueInteractuable(PantallaDeJuego pantallaDeJuego, Rectangle limites) {
         this.pantallaDeJuego = pantallaDeJuego;
-        this.world = pantallaDeJuego.getMundo();
-        this.map = pantallaDeJuego.getMap();
-        this.bounds = bounds;
+        this.mundo = pantallaDeJuego.getMundo();
+        this.mapa = pantallaDeJuego.getMap();
+        this.limites = limites;
 
         BodyDef bdef = new BodyDef();
         FixtureDef fdef = new FixtureDef();
         PolygonShape shape = new PolygonShape();
 
         bdef.type = BodyDef.BodyType.StaticBody;
-        bdef.position.set((bounds.getX() + bounds.getWidth() / 2) / SquareGame.PPM,
-                (bounds.getY() + bounds.getHeight() / 2) / SquareGame.PPM);
+        bdef.position.set(Constantes.escalarAppm(limites.getX() + limites.getWidth() / 2),
+                Constantes.escalarAppm(limites.getY() + limites.getHeight() / 2));
 
-        body = world.createBody(bdef);
+        cuerpo = mundo.createBody(bdef);
 
-        shape.setAsBox((bounds.getWidth() / 2) / SquareGame.PPM,
-                (bounds.getHeight() / 2) / SquareGame.PPM);
+        shape.setAsBox(  Constantes.escalarAppm(limites.getWidth() / 2),
+                Constantes.escalarAppm(limites.getHeight() / 2));
         fdef.shape = shape;
 
-        fixture = body.createFixture(fdef);
+        fixture = cuerpo.createFixture(fdef);
     }
-    public BloqueInteractuable(PantallaDeJuego pantallaDeJuego, MapObject object) {
-        this.pantallaDeJuego = pantallaDeJuego;
-        this.world = pantallaDeJuego.getMundo();
-        this.map = pantallaDeJuego.getMap();
-        this.bounds = ((RectangleMapObject)object).getRectangle() ;
-        this.object = object;
 
+    //// Constructor
+    /**
+     * Constructor asigna la pantalla de juego, el mundo
+     * @param pantallaDeJuego
+     * @param objecto
+     */
+    public BloqueInteractuable(PantallaDeJuego pantallaDeJuego, MapObject objecto) {
+        this.pantallaDeJuego = pantallaDeJuego;
+        this.mundo = pantallaDeJuego.getMundo();
+        this.mapa = pantallaDeJuego.getMap();
+        this.limites = ((RectangleMapObject) objecto).getRectangle();
+        this.objecto = objecto;
+        definirFisica();
+    }
+
+    //// Métodos constructores
+    private void  definirFisica(){
         BodyDef bdef = new BodyDef();
         FixtureDef fdef = new FixtureDef();
         PolygonShape shape = new PolygonShape();
 
         bdef.type = BodyDef.BodyType.StaticBody;
-        bdef.position.set((bounds.getX() + bounds.getWidth() / 2) / SquareGame.PPM,
-                (bounds.getY() + bounds.getHeight() / 2) / SquareGame.PPM);
+        bdef.position.set(Constantes.escalarAppm(limites.getX() + limites.getWidth() / 2),
+                Constantes.escalarAppm(limites.getY() + limites.getHeight() / 2));
 
-        body = world.createBody(bdef);
+        cuerpo = mundo.createBody(bdef);
 
-        shape.setAsBox((bounds.getWidth() / 2) / SquareGame.PPM,
-                (bounds.getHeight() / 2) / SquareGame.PPM);
+        shape.setAsBox(Constantes.escalarAppm(limites.getWidth() / 2),
+                Constantes.escalarAppm(limites.getHeight() / 2));
         fdef.shape = shape;
 
-        fixture = body.createFixture(fdef);
+        fixture = cuerpo.createFixture(fdef);
     }
 
-    public  abstract  void toque(Cuadrado jugador);
-    public void setCategoryFilter(short filterBit){
+    /**
+     * Efecto dado sobre el jugador al tocar el bloque o golpear con la cabeza
+     * @param jugador objeto del jugador que ha tocado el bloque
+     */
+    public abstract void toque(Cuadrado jugador);
+
+    /**
+     * Asigna la categoría del objeto de clase Fixture(elemento fijo)
+     * @param filterBit Bit de categoría
+     */
+    public void setFiltroDeCategoria(short filterBit) {
         Filter filter = new Filter();
         filter.categoryBits = filterBit;
         fixture.setFilterData(filter);
     }
 
-    public TiledMapTileLayer.Cell getCell(){
-        TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(1);
-        return  layer.getCell((int) (body.getPosition().x * SquareGame.PPM/16),
-                (int) (body.getPosition().y*SquareGame.PPM/16));
+    /**
+     * Obtiene le identificador del sprite de la celda que corresponde con el bloque
+     * @return identificador de la celda
+     */
+    public TiledMapTileLayer.Cell getCell() {
+        TiledMapTileLayer layer = (TiledMapTileLayer) mapa.getLayers().get(1);
+        return layer.getCell((int) (cuerpo.getPosition().x * Constantes.PPM / Constantes.PIXELS_TILE),
+                (int) (cuerpo.getPosition().y * Constantes.PPM / Constantes.PIXELS_TILE));
     }
 
 }

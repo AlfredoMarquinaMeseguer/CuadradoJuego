@@ -41,13 +41,13 @@ public class B2CreadorDelMundo {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX() + rect.getWidth() / 2) / SquareGame.PPM,
-                    (rect.getY() + rect.getHeight() / 2) / SquareGame.PPM);
+            bdef.position.set(Constantes.escalarAppm(rect.getX() + rect.getWidth() / 2),
+                    Constantes.escalarAppm(rect.getY() + rect.getHeight() / 2));
 
             body = world.createBody(bdef);
 
-            shape.setAsBox((rect.getWidth() / 2) / SquareGame.PPM,
-                    (rect.getHeight() / 2) / SquareGame.PPM);
+            shape.setAsBox(Constantes.escalarAppm(rect.getWidth() / 2) ,
+                    Constantes.escalarAppm(rect.getHeight() / 2));
             fdef.shape = shape;
 
             body.createFixture(fdef);
@@ -57,15 +57,15 @@ public class B2CreadorDelMundo {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX() + rect.getWidth() / 2) / SquareGame.PPM,
-                    (rect.getY() + rect.getHeight() / 2) / SquareGame.PPM);
+            bdef.position.set(Constantes.escalarAppm(rect.getX() + rect.getWidth() / 2),
+                    Constantes.escalarAppm(rect.getY() + rect.getHeight() / 2));
 
             body = world.createBody(bdef);
 
-            shape.setAsBox((rect.getWidth() / 2) / SquareGame.PPM,
-                    (rect.getHeight() / 2) / SquareGame.PPM);
+            shape.setAsBox(Constantes.escalarAppm(rect.getWidth() / 2),
+                    Constantes.escalarAppm(rect.getHeight() / 2) );
             fdef.shape = shape;
-            fdef.filter.categoryBits = SquareGame.PINCHOS_BIT;
+            fdef.filter.categoryBits = Constantes.PINCHOS_BIT;
             body.createFixture(fdef);
         }
         // Crear las Monedas
@@ -80,8 +80,8 @@ public class B2CreadorDelMundo {
         goombas = new Array<Triangulo>();
         for (MapObject object:map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            goombas.add(new Triangulo(pantallaDeJuego, rect.getX()/SquareGame.PPM,
-                    rect.getY()/SquareGame.PPM));
+            goombas.add(new Triangulo(pantallaDeJuego, Constantes.escalarAppm(rect.getX()),
+                    Constantes.escalarAppm(rect.getY())));
         }
 
         // Crear Checkpoints

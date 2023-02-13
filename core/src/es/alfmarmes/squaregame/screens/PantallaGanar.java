@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import es.alfmarmes.squaregame.SquareGame;
 import es.alfmarmes.squaregame.escenas.Hud;
 import es.alfmarmes.squaregame.sprites.Cuadrado;
+import es.alfmarmes.squaregame.tools.Constantes;
 
 public class PantallaGanar implements Screen {
     private Viewport viewport;
@@ -25,7 +26,7 @@ public class PantallaGanar implements Screen {
 
     public PantallaGanar(SquareGame game, Cuadrado.Personaje personaje) {
         this.game = game;
-        this.viewport = new FitViewport(SquareGame.V_ANCHO, SquareGame.V_ALTO);
+        this.viewport = new FitViewport(Constantes.V_ANCHO, Constantes.V_ALTO);
         this.stage = new Stage(this.viewport, ((SquareGame) game).batch);
         this.personaje = personaje;
         Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(), Color.WHITE);

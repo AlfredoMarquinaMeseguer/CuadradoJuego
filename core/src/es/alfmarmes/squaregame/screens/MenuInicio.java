@@ -25,6 +25,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import es.alfmarmes.squaregame.SquareGame;
 import es.alfmarmes.squaregame.sprites.Cuadrado;
+import es.alfmarmes.squaregame.tools.Constantes;
 
 /**
  * Pantalla principal del juego, donde se muestra el menú principal
@@ -55,7 +56,7 @@ public class MenuInicio implements Screen {
         skin.setScale(0.1f);
         batch = new SpriteBatch();
         camaraJuego = new OrthographicCamera();
-        puerto = new FitViewport(SquareGame.V_ANCHO * 2, SquareGame.V_ALTO * 2, camaraJuego);
+        puerto = new FitViewport(Constantes.V_ANCHO * 2, Constantes.V_ALTO * 2, camaraJuego);
         puerto.apply();
         camaraJuego.position.set(camaraJuego.viewportWidth / 2, camaraJuego.viewportHeight / 2, 0);
         camaraJuego.update();
@@ -81,14 +82,14 @@ public class MenuInicio implements Screen {
         SpriteDrawable cuadrado = new SpriteDrawable(cuadradoImagen);
 
         ImageButton seleccionCuadrado = new ImageButton(cuadrado);
-        seleccionCuadrado.setScale(64);
+        seleccionCuadrado.setSize(200, 200);
 
         Sprite armandoImagen = new Sprite(imagenes.findRegion("armando"),
                 0, 0, 16, 16);
         SpriteDrawable armando = new SpriteDrawable(armandoImagen);
 
         ImageButton seleccionArmando = new ImageButton(armando);
-        seleccionArmando.setScale(64);
+        seleccionArmando.setSize(200, 200);
 
         TextButton botonEduardo = new TextButton("Eduardo", skin);
         botonEduardo.addListener(new InputListener() {
