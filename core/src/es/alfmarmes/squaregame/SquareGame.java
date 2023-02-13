@@ -19,6 +19,7 @@ public class SquareGame extends Game {
         manager = new AssetManager();
 
         manager.load(Constantes.R_MUSICA);
+        manager.load(Constantes.R_MUSICA_MENU);
         manager.load(Constantes.R_MONEDA);
         manager.load(Constantes.R_CHOQUE);
         manager.load(Constantes.R_ROMPER_BLOQUE);

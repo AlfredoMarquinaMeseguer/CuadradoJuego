@@ -231,11 +231,13 @@ public class PantallaDeJuego implements Screen {
     }
 
     private void ganar() {
+        SquareGame.manager.get(Constantes.R_MUSICA).stop();
         game.setScreen(new PantallaGanar(game, Cuadrado.personajeSeleccionado));
         dispose();
     }
 
     private void perder() {
+        SquareGame.manager.get(Constantes.R_MUSICA).stop();
         game.setScreen(new GameOverScreen(game, Cuadrado.personajeSeleccionado));
         dispose();
     }

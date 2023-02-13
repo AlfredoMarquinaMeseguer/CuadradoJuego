@@ -32,6 +32,9 @@ public class Constantes {
      */
     public static final float TILE = PIXELS_TILE / PPM;
 
+    /**
+     * Nombre del programa
+     */
     public static final String APP = "squareGame";
     //// Bits de colisiones
     /**
@@ -51,20 +54,52 @@ public class Constantes {
      */
     public static final short BRICK_BIT = 4;
     /**
-     * Bit categoría de los bloques de
+     * Bit categoría de los bloques de de objetos
      */
     public static final short COIN_BIT = 8;
+    /**
+     * Bit categoría bloque rotos
+     */
     public static final short DESTROYED_BIT = 16;
+    /**
+     * Bit categoría pinchos y bloques que dañan al jugador
+     */
     public static final short PINCHOS_BIT = 32;
+    /**
+     * Bit categoría de los enemigos
+     */
     public static final short ENEMIGO_BIT = 64;
+    /**
+     * Bit categoría de la cabeza de los enemigos
+     */
     public static final short CABEZA_ENEMIGO_BIT = 128;
+    /**
+     * Bit categoría de los cascos
+     */
     public static final short OBJETO_BIT = 256;
+    /**
+     * Bit categoría de la cabeza del cuadrado
+     */
     public static final short CABEZA_CUADRADO_BIT = 512;
+    /**
+     * Bit de categoría de los puntos de control
+     */
     public static final short CONTROL_BIT = 1024;
 
 
+    /**
+     * Música del menu
+     */
     public final static AssetDescriptor<Music> R_MUSICA = new AssetDescriptor<Music>
-            ("audio/music/linkin_music.mp3", Music.class);
+            ("audio/music/numb.mp3", Music.class);
+    /**
+     * Música del menu
+     */
+    public final static AssetDescriptor<Music> R_MUSICA_MENU = new AssetDescriptor<Music>
+            ("audio/music/in_the_end.mp3", Music.class);
+    /**
+     * M
+     */
     public final static AssetDescriptor<Sound> R_MONEDA = new AssetDescriptor<Sound>
             ("audio/sounds/coin.wav", Sound.class);
     public final static AssetDescriptor<Sound> R_CHOQUE = new AssetDescriptor<Sound>
@@ -86,6 +121,11 @@ public class Constantes {
     public static final AssetDescriptor<Skin> SKIN = new AssetDescriptor<Skin>("skin/pixthulhu-ui.json", Skin.class,
             new SkinLoader.SkinParameter("skin/pixthulhu-ui.atlas"));
 
+    /**
+     *
+     * @param numero
+     * @return
+     */
     public static float escalarAppm(float numero) {
         return (numero / PPM);
     }

@@ -47,6 +47,7 @@ public class MenuInicio implements Screen {
     Table table;
 
     public MenuInicio(SquareGame game) {
+        SquareGame.manager.get(Constantes.R_MUSICA_MENU).play();
         this.game = game;
         atlas = new TextureAtlas("skin/pixthulhu-ui.atlas");
         this.imagenes = new TextureAtlas("tileset/enemigosyobjeto.atlas");
@@ -152,6 +153,7 @@ public class MenuInicio implements Screen {
     }
 
     private boolean jugar(Event event, Cuadrado.Personaje personaje) {
+        SquareGame.manager.get(Constantes.R_MUSICA_MENU).stop();
         dispose();
         game.setScreen(new PantallaDeJuego(game, personaje));
         return true;
