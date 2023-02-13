@@ -3,7 +3,6 @@ package es.alfmarmes.squaregame;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import es.alfmarmes.squaregame.screens.MenuInicio;
 import es.alfmarmes.squaregame.tools.Constantes;
@@ -26,7 +25,7 @@ public class SquareGame extends Game {
         manager.load(Constantes.R_BONK);
         manager.load(Constantes.R_MEJORA_APARECE);
         manager.load(Constantes.R_MEJORA);
-        manager.load(Constantes.R_REDUCCION);
+        manager.load(Constantes.R_QUITAR_CASCO);
         manager.load(Constantes.R_MUERTE);
         manager.load(Constantes.SKIN);
 

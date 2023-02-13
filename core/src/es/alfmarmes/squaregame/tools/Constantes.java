@@ -98,33 +98,67 @@ public class Constantes {
     public final static AssetDescriptor<Music> R_MUSICA_MENU = new AssetDescriptor<Music>
             ("audio/music/in_the_end.mp3", Music.class);
     /**
-     * M
+     * Efecto de sonido al golpear bloque moneda
      */
     public final static AssetDescriptor<Sound> R_MONEDA = new AssetDescriptor<Sound>
             ("audio/sounds/coin.wav", Sound.class);
+
+    /**
+     * Efecto sonido golpear bloque vacio.
+     */
     public final static AssetDescriptor<Sound> R_CHOQUE = new AssetDescriptor<Sound>
             ("audio/sounds/bump.wav", Sound.class);
+
+    /**
+     * Efecto de sonido romper bloque.
+     */
     public final static AssetDescriptor<Sound> R_ROMPER_BLOQUE = new AssetDescriptor<Sound>
             ("audio/sounds/breakblock.wav", Sound.class);
+
+    /**
+     * Efecto de sonido matar triangulos.
+     */
     public final static AssetDescriptor<Sound> R_BONK = new AssetDescriptor<Sound>
             ("audio/sounds/stomp.wav", Sound.class);
 
+    /**
+     * Efecto de sonido aparece el casco.
+     */
     public final static AssetDescriptor<Sound> R_MEJORA_APARECE = new AssetDescriptor<Sound>
             ("audio/sounds/powerup_spawn.wav", Sound.class);
+
+    /**
+     * Efecto de sonido coger casco.
+     */
     public final static AssetDescriptor<Sound> R_MEJORA = new AssetDescriptor<>
             ("audio/sounds/powerup.wav", Sound.class);
-    public final static AssetDescriptor<Sound> R_REDUCCION = new AssetDescriptor<Sound>
+
+    /**
+     * Efecto de sonido romper casco.
+     */
+    public final static AssetDescriptor<Sound> R_QUITAR_CASCO = new AssetDescriptor<Sound>
             ("audio/sounds/damage.wav", Sound.class);
+    /**
+     * Efecto de sonido recibir dañon sin casco.
+     */
+    public final static AssetDescriptor<Sound> R_DANNO = new AssetDescriptor<Sound>
+            ("audio/sounds/damage.wav", Sound.class);
+    /**
+     * Efecto de sonido de muerte.
+     */
     public final static AssetDescriptor<Sound> R_MUERTE = new AssetDescriptor<Sound>
             ("audio/sounds/muerte.mp3", Sound.class);
 
+    /**
+     * Descrición del tema del menú.
+     */
     public static final AssetDescriptor<Skin> SKIN = new AssetDescriptor<Skin>("skin/pixthulhu-ui.json", Skin.class,
             new SkinLoader.SkinParameter("skin/pixthulhu-ui.atlas"));
 
     /**
-     *
-     * @param numero
-     * @return
+     * Escala los número a PPM para ponerlo en el mapa
+     * @param numero numero a escalar
+     * @return numero escalado
      */
     public static float escalarAppm(float numero) {
         return (numero / PPM);

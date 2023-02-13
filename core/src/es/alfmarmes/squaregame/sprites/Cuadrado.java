@@ -402,7 +402,7 @@ public class Cuadrado extends Sprite {
     public void decrecer() {
         runGrowAnimation = true;
         tieneCasco = false;
-        SquareGame.manager.get(Constantes.R_REDUCCION).play();
+        SquareGame.manager.get(Constantes.R_QUITAR_CASCO).play();
     }
 
     public void die() {
