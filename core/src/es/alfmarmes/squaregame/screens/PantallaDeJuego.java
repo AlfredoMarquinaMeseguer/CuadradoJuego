@@ -11,7 +11,9 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Box2D;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -33,7 +35,6 @@ import es.alfmarmes.squaregame.tools.ContactListenerDeMundo;
 public class PantallaDeJuego implements Screen {
 
 
-
     private final Music musica;
     private SquareGame game;
     private TextureAtlas atlas;
@@ -50,6 +51,8 @@ public class PantallaDeJuego implements Screen {
     // Variables Box2d
     private World mundo;
     private Box2DDebugRenderer b2dr;
+
+    //private Box2D
     private B2CreadorDelMundo creadorDelMundo;
 
     // Sprites
@@ -82,11 +85,12 @@ public class PantallaDeJuego implements Screen {
 
         // Esto se va a cambiar en algun momento
         mundo = new World(new Vector2(0, -10), true);
-        b2dr = new Box2DDebugRenderer();
+                b2dr = new Box2DDebugRenderer();
+
 
         creadorDelMundo = new B2CreadorDelMundo(this);
 
-// Mario
+        // Jugador
         this.jugador = new Cuadrado(this, personajeSeleccionado);
 
         mundo.setContactListener(new ContactListenerDeMundo());
@@ -158,7 +162,7 @@ public class PantallaDeJuego implements Screen {
     private void handleInput(float dt) {
         // Se puede restringir el
         if ((Gdx.input.isKeyJustPressed(Input.Keys.UP) || Gdx.input.isKeyJustPressed(Input.Keys.W))
-        && jugador.getNumeroSaltos() < jugador.getMaxSaltos()) {
+                && jugador.getNumeroSaltos() < jugador.getMaxSaltos()) {
             jugador.sumarSalto();
             jugador.cuerpo.applyLinearImpulse(new Vector2(0, 4f),
                     jugador.cuerpo.getWorldCenter(), true);
@@ -200,7 +204,7 @@ public class PantallaDeJuego implements Screen {
         renderer.render();
 
         // Renderizar el Box2DDebugLines
-        b2dr.render(mundo, camaraJuego.combined);
+//        b2dr.render(mundo, camaraJuego.combined);
 
 
         game.batch.setProjectionMatrix(camaraJuego.combined);
@@ -222,7 +226,7 @@ public class PantallaDeJuego implements Screen {
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
 
-        if (gameOver()){
+        if (gameOver()) {
             perder();
         } else if (ganado) {
             ganar();
@@ -245,6 +249,7 @@ public class PantallaDeJuego implements Screen {
     /**
      * Determina si el juego debe acabarse ya o no. Se debe acabar tres segundos después de
      * muerto
+     *
      * @return Acabar juego
      */
     public boolean gameOver() {
@@ -255,6 +260,7 @@ public class PantallaDeJuego implements Screen {
     public void spawnItem(DefObjeto idef) {
         consumiblesAparecer.add(idef);
     }
+
     //-------------------------------------Métodos Override-------------------------------------
     @Override
     public void resize(int width, int height) {

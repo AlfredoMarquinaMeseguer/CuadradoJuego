@@ -55,7 +55,7 @@ public class Hud implements Disposable {
                 new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         scoreLabel = new Label(String.format("%06d", score),
                 new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        this.timeLabel = new Label("TIME",
+        this.timeLabel = new Label("TIEMPO",
                 new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         vidasLabel = new Label(Cuadrado.VIDAS_INICIO+"",
                 new Label.LabelStyle(new BitmapFont(), Color.WHITE));

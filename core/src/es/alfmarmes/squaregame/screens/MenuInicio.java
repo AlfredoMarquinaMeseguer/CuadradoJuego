@@ -5,21 +5,19 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
-import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
@@ -36,76 +34,77 @@ import es.alfmarmes.squaregame.tools.Constantes;
 public class MenuInicio implements Screen {
 
 
-    private final TextureAtlas atlas;
-    private final SpriteBatch batch;
-    private final TextureAtlas imagenes;
-    private OrthographicCamera camaraJuego;
-    private FitViewport puerto;
     SquareGame game;
     Stage stage;
     Skin skin;
-    Table table;
+    FitViewport puerto;
 
+    /**
+     * Constructor
+     * @param game juego que va a iniciar el programa
+     */
     public MenuInicio(SquareGame game) {
         SquareGame.manager.get(Constantes.R_MUSICA_MENU).play();
         this.game = game;
-        atlas = new TextureAtlas("skin/pixthulhu-ui.atlas");
-        this.imagenes = new TextureAtlas("tileset/enemigosyobjeto.atlas");
+        TextureAtlas atlas = new TextureAtlas("skin/pixthulhu-ui.atlas");
         skin = new Skin(Gdx.files.internal("skin/pixthulhu-ui.json"), atlas);
-
-//        skin.getFont("font").getData().setScale(0.5f);
         skin.setScale(0.1f);
-        batch = new SpriteBatch();
-        camaraJuego = new OrthographicCamera();
-        puerto = new FitViewport(Constantes.V_ANCHO * 2, Constantes.V_ALTO * 2, camaraJuego);
+        SpriteBatch batch = new SpriteBatch();
+        OrthographicCamera camaraJuego = new OrthographicCamera();
+        puerto= new FitViewport(Constantes.V_ANCHO * 2, Constantes.V_ALTO * 2, camaraJuego);
         puerto.apply();
         camaraJuego.position.set(camaraJuego.viewportWidth / 2, camaraJuego.viewportHeight / 2, 0);
         camaraJuego.update();
         stage = new Stage(puerto, batch);
     }
-    /*
-    http://localhost:63342/SquareGame/gdx-1.11.0-javadoc.jar/stylesheet.css?_ijt=sct8544u9oogr99vs22hedu9c4
-     */
 
-    private void loadScreen() {
+    /**
+     * Carga los elementos de la pantalla
+     */
+    private void cargarPantalla() {
         Gdx.input.setInputProcessor(stage);
         //Crea Tabla
-        Table mainTable = new Table();
+        Table tabla = new Table();
         //La tabla llena el stage y se centra
-        mainTable.setFillParent(true);
-        mainTable.center();
+        tabla.setFillParent(true);
+        tabla.center();
 
-        Label nombre = new Label("Cuadrado saltar\u00EDn", skin);
-        Label subtitulo = new Label("Con Música de Linkin Park ", skin);
+        Label nombre = new Label("Cuadrado saltador", skin);
+        Label subtitulo = new Label("Con Musica de Linkin Park ", skin);
+        Label seleccion = new Label("Elige Personaje: ", skin);
 
-        Sprite cuadradoImagen = new Sprite(imagenes.findRegion("cuadrado"),
-                0, 0, 16, 16);
+
+        Sprite cuadradoImagen = new Sprite(new TextureRegion(new Texture("images/eduardo.png")));
+        cuadradoImagen.setSize(80,80);
+
         SpriteDrawable cuadrado = new SpriteDrawable(cuadradoImagen);
 
         ImageButton seleccionCuadrado = new ImageButton(cuadrado);
         seleccionCuadrado.setSize(200, 200);
+        seleccionCuadrado.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                jugar(Cuadrado.Personaje.EDUARDO);
+                return super.touchDown(event, x, y, pointer, button);
+            }
+        });
 
-        Sprite armandoImagen = new Sprite(imagenes.findRegion("armando"),
-                0, 0, 16, 16);
+        Sprite armandoImagen = new Sprite(new TextureRegion(new Texture("images/armando.png")));
+        armandoImagen.setSize(80,80);
+
         SpriteDrawable armando = new SpriteDrawable(armandoImagen);
 
         ImageButton seleccionArmando = new ImageButton(armando);
         seleccionArmando.setSize(200, 200);
 
-        TextButton botonEduardo = new TextButton("Eduardo", skin);
-        botonEduardo.addListener(new InputListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                jugar(event, Cuadrado.Personaje.EDUARDO);
-                return super.touchDown(event, x, y, pointer, button);
-            }
-        });
 
-        TextButton botonArmando = new TextButton("Armando", skin);
-        botonArmando.addListener(new InputListener() {
+
+
+
+        seleccionArmando.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                jugar(event, Cuadrado.Personaje.ARMANDO);
+                jugar(Cuadrado.Personaje.ARMANDO);
                 return super.touchDown(event, x, y, pointer, button);
             }
 
@@ -127,55 +126,46 @@ public class MenuInicio implements Screen {
         });
 
 
-        seleccionCuadrado.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.exit();
-            }
-        });
+
 
         //Añado botones a la tabla
-        mainTable.add(nombre).padBottom(10).fill(true);
-        mainTable.row().center();
-        mainTable.add(subtitulo).padBottom(30);
-        mainTable.row().center();
-        mainTable.add(seleccionCuadrado).padRight(16f);
-        mainTable.add(seleccionArmando).padLeft(16f);
-        mainTable.row().center();
-        mainTable.add(botonEduardo);
-        mainTable.add(botonArmando);
-        mainTable.row();
-        mainTable.add(exitButton).right();
+        tabla.add(nombre).padBottom(10).fill(true);
+        tabla.row();
+        tabla.add(subtitulo).padBottom(30);
+        tabla.row();
+        tabla.add(seleccion).padBottom(30).padTop(50).center();
+        tabla.row();
+        tabla.add(seleccionCuadrado).padRight(16f);
+        tabla.add(seleccionArmando).padLeft(16f);
+        tabla.row();
+        tabla.add(exitButton).right().padTop(10);
 
         //Add tabla al stage
-        stage.addActor(mainTable);
+        stage.addActor(tabla);
 
     }
 
-    private boolean jugar(Event event, Cuadrado.Personaje personaje) {
+    /**
+     * Inicia el juego con el personaje seleccionado
+     * @param personaje personaje seleccionado
+     */
+    private void jugar(Cuadrado.Personaje personaje) {
         SquareGame.manager.get(Constantes.R_MUSICA_MENU).stop();
         dispose();
         game.setScreen(new PantallaDeJuego(game, personaje));
-        return true;
     }
 
-    private TextButton addButton(String name) {
-        TextButton button = new TextButton(name, skin);
-        table.add(button).fillX().padBottom(10);
-        table.row();
-        return button;
-    }
 
     @Override
     public void show() {
 
-        loadScreen();
+        cargarPantalla();
     }
 
     @Override
     public void render(float dt) {
 
-        Gdx.gl.glClearColor(0, 0, 0.2f, 1);
+        Gdx.gl.glClearColor(1, 0.07843137254f, 0.7568627f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 
@@ -206,7 +196,8 @@ public class MenuInicio implements Screen {
     @Override
     public void resize(int arg0, int arg1) {
         // TODO Auto-generated method stub
-        loadScreen();
+        puerto.setScreenSize(arg0, arg1);
+        cargarPantalla();
     }
 
     @Override

@@ -421,6 +421,7 @@ public class Cuadrado extends Sprite {
 
             cuerpo.applyLinearImpulse(new Vector2(0, 4f), cuerpo.getWorldCenter(), true);
         } else {
+            SquareGame.manager.get(Constantes.R_DANNO).play();
             Hud.actualizarVidas(vidas);
           vidas --;
           setPosition(ultimaX, ultimaY);

@@ -119,7 +119,7 @@ public class Constantes {
      * Efecto de sonido matar triangulos.
      */
     public final static AssetDescriptor<Sound> R_BONK = new AssetDescriptor<Sound>
-            ("audio/sounds/stomp.wav", Sound.class);
+            ("audio/sounds/crit.mp3", Sound.class);
 
     /**
      * Efecto de sonido aparece el casco.
@@ -131,7 +131,7 @@ public class Constantes {
      * Efecto de sonido coger casco.
      */
     public final static AssetDescriptor<Sound> R_MEJORA = new AssetDescriptor<>
-            ("audio/sounds/powerup.wav", Sound.class);
+            ("audio/sounds/bing.mp3", Sound.class);
 
     /**
      * Efecto de sonido romper casco.
@@ -142,7 +142,7 @@ public class Constantes {
      * Efecto de sonido recibir dañon sin casco.
      */
     public final static AssetDescriptor<Sound> R_DANNO = new AssetDescriptor<Sound>
-            ("audio/sounds/damage.wav", Sound.class);
+            ("audio/sounds/oof.mp3", Sound.class);
     /**
      * Efecto de sonido de muerte.
      */

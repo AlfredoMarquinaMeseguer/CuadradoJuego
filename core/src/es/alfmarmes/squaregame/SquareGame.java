@@ -23,6 +23,7 @@ public class SquareGame extends Game {
         manager.load(Constantes.R_CHOQUE);
         manager.load(Constantes.R_ROMPER_BLOQUE);
         manager.load(Constantes.R_BONK);
+        manager.load(Constantes.R_DANNO);
         manager.load(Constantes.R_MEJORA_APARECE);
         manager.load(Constantes.R_MEJORA);
         manager.load(Constantes.R_QUITAR_CASCO);
