@@ -16,8 +16,8 @@ import com.badlogic.gdx.utils.Array;
 
 import es.alfmarmes.squaregame.SquareGame;
 import es.alfmarmes.squaregame.escenas.Hud;
-import es.alfmarmes.squaregame.screens.PantallaDeJuego;
-import es.alfmarmes.squaregame.tools.Constantes;
+import es.alfmarmes.squaregame.pantallas.PantallaDeJuego;
+import es.alfmarmes.squaregame.herramientas.Constantes;
 
 public class Cuadrado extends Sprite {
     public static final int VIDAS_INICIO = 5;
@@ -73,7 +73,7 @@ public class Cuadrado extends Sprite {
 
     // Animaciones de cuadrado normal
     private TextureRegion parado;
-    private TextureRegion marioJump;
+    private TextureRegion cuadradoJump;
     private Animation correr;
     private TextureRegion cuadradoMuerto;
     private int vidas;
@@ -144,7 +144,7 @@ public class Cuadrado extends Sprite {
         frames.clear();
 
         //get jump animation frames and add them to marioJump Animation
-        marioJump = new TextureRegion(cuadradoPequenno,
+        cuadradoJump = new TextureRegion(cuadradoPequenno,
                 I_IMG_SALTANDO * Constantes.PIXELS_TILE, 0,
                 Constantes.PIXELS_TILE, Constantes.PIXELS_TILE);
         cascoJump = new TextureRegion(cuadradoCasco,
@@ -273,7 +273,7 @@ public class Cuadrado extends Sprite {
                 if (tieneCasco) {
                     region = cascoJump;
                 } else {
-                    region = marioJump;
+                    region = cuadradoJump;
                 }
 
                 break;

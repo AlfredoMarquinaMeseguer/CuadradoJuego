@@ -4,8 +4,8 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import es.alfmarmes.squaregame.screens.MenuInicio;
-import es.alfmarmes.squaregame.tools.Constantes;
+import es.alfmarmes.squaregame.pantallas.MenuInicio;
+import es.alfmarmes.squaregame.herramientas.Constantes;
 
 public class SquareGame extends Game {
     // Utilizarlo de forma estática puede causar errores

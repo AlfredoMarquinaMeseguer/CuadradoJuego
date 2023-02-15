@@ -1,4 +1,4 @@
-package es.alfmarmes.squaregame.screens;
+package es.alfmarmes.squaregame.pantallas;
 
 
 import com.badlogic.gdx.Gdx;
@@ -23,7 +23,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import es.alfmarmes.squaregame.SquareGame;
 import es.alfmarmes.squaregame.sprites.Cuadrado;
-import es.alfmarmes.squaregame.tools.Constantes;
+import es.alfmarmes.squaregame.herramientas.Constantes;
 
 /**
  * Pantalla principal del juego, donde se muestra el menú principal

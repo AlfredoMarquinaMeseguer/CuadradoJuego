@@ -13,9 +13,9 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
-import es.alfmarmes.squaregame.screens.PantallaDeJuego;
+import es.alfmarmes.squaregame.pantallas.PantallaDeJuego;
 import es.alfmarmes.squaregame.sprites.Cuadrado;
-import es.alfmarmes.squaregame.tools.Constantes;
+import es.alfmarmes.squaregame.herramientas.Constantes;
 
 public abstract class BloqueInteractuable {
     /**

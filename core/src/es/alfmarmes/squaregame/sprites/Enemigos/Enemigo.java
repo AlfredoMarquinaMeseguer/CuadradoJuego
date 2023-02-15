@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 
-import es.alfmarmes.squaregame.screens.PantallaDeJuego;
+import es.alfmarmes.squaregame.pantallas.PantallaDeJuego;
 
 public abstract class Enemigo extends Sprite {
 

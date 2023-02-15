@@ -1,4 +1,4 @@
-package es.alfmarmes.squaregame.tools;
+package es.alfmarmes.squaregame.herramientas;
 
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.loaders.SkinLoader;

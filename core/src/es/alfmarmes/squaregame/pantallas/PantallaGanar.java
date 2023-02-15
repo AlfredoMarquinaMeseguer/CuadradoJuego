@@ -1,4 +1,4 @@
-package es.alfmarmes.squaregame.screens;
+package es.alfmarmes.squaregame.pantallas;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -14,7 +14,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import es.alfmarmes.squaregame.SquareGame;
 import es.alfmarmes.squaregame.escenas.Hud;
 import es.alfmarmes.squaregame.sprites.Cuadrado;
-import es.alfmarmes.squaregame.tools.Constantes;
+import es.alfmarmes.squaregame.herramientas.Constantes;
 
 public class PantallaGanar implements Screen {
     private Viewport viewport;
@@ -29,40 +29,40 @@ public class PantallaGanar implements Screen {
     /**
      * Juego en el que nos encontramos
      */
-    private SquareGame game;
+    private SquareGame juego;
 
     /**
      * Recibe como entrada una instancia de SquareGame (el objeto principal del juego) y un objeto
      * del tipo Cuadrado.Personaje que representa al  personaje que el jugador ha elegido para
      * jugar. En el constructor, se crea una nueva instancia de Viewport y Stage, y se agrega el
      * contenido de la pantalla (una tabla que contiene tres etiquetas) al escenario.
-     * @param game el objeto principal del juego.
+     * @param juego el objeto principal del juego.
      * @param personaje personaje que el jugador ha elegido para jugar.
      */
-    public PantallaGanar(SquareGame game, Cuadrado.Personaje personaje) {
-        this.game = game;
+    public PantallaGanar(SquareGame juego, Cuadrado.Personaje personaje) {
+        this.juego = juego;
         this.viewport = new FitViewport(Constantes.V_ANCHO, Constantes.V_ALTO);
-        this.stage = new Stage(this.viewport, ((SquareGame) game).batch);
+        this.stage = new Stage(this.viewport, ((SquareGame) juego).batch);
         this.personaje = personaje;
         Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
 
-        Table table = new Table();
+        Table tabla = new Table();
 
-        table.center();
-        table.setFillParent(true);
+        tabla.center();
+        tabla.setFillParent(true);
 
 
         Label gameOverLabel = new Label("¡¡¡Has Ganado " + Cuadrado.nomberPersonaje(personaje) + "!!!", font);
         Label puntuacionLabel = new Label(Hud.getPuntuacionTotal() + " puntos", font);
         Label playAgainLabel = new Label("Click para volver al menu", font);
 
-        table.add(gameOverLabel).expandX();
-        table.row();
-        table.add(puntuacionLabel).expandX().padTop(10f);
-        table.row();
-        table.add(playAgainLabel).expandX().padTop(10f);
+        tabla.add(gameOverLabel).expandX();
+        tabla.row();
+        tabla.add(puntuacionLabel).expandX().padTop(10f);
+        tabla.row();
+        tabla.add(playAgainLabel).expandX().padTop(10f);
 
-        stage.addActor(table);
+        stage.addActor(tabla);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class PantallaGanar implements Screen {
     public void render(float delta) {
         // Listener para volver al inicio del nivel
         if (Gdx.input.justTouched()) {
-            game.setScreen(new MenuInicio(game));
+            juego.setScreen(new MenuInicio(juego));
             dispose();
         }
 

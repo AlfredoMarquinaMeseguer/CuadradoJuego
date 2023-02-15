@@ -1,13 +1,12 @@
 package es.alfmarmes.squaregame.sprites.BloqueInteracturable;
 
 import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.math.Rectangle;
 
 import es.alfmarmes.squaregame.SquareGame;
 import es.alfmarmes.squaregame.escenas.Hud;
-import es.alfmarmes.squaregame.screens.PantallaDeJuego;
+import es.alfmarmes.squaregame.pantallas.PantallaDeJuego;
 import es.alfmarmes.squaregame.sprites.Cuadrado;
-import es.alfmarmes.squaregame.tools.Constantes;
+import es.alfmarmes.squaregame.herramientas.Constantes;
 
 public class Ladrillo extends BloqueInteractuable {
 

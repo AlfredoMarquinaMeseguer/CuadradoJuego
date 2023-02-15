@@ -2,9 +2,9 @@ package es.alfmarmes.squaregame.sprites.BloqueInteracturable;
 
 import com.badlogic.gdx.maps.MapObject;
 
-import es.alfmarmes.squaregame.screens.PantallaDeJuego;
+import es.alfmarmes.squaregame.pantallas.PantallaDeJuego;
 import es.alfmarmes.squaregame.sprites.Cuadrado;
-import es.alfmarmes.squaregame.tools.Constantes;
+import es.alfmarmes.squaregame.herramientas.Constantes;
 
 public class PuntoControl extends BloqueInteractuable {
     /**

@@ -1,4 +1,4 @@
-package es.alfmarmes.squaregame.screens;
+package es.alfmarmes.squaregame.pantallas;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -27,9 +27,9 @@ import es.alfmarmes.squaregame.sprites.Enemigos.Enemigo;
 import es.alfmarmes.squaregame.sprites.Objetos.DefObjeto;
 import es.alfmarmes.squaregame.sprites.Objetos.Objeto;
 import es.alfmarmes.squaregame.sprites.Objetos.Seta;
-import es.alfmarmes.squaregame.tools.B2CreadorDelMundo;
-import es.alfmarmes.squaregame.tools.Constantes;
-import es.alfmarmes.squaregame.tools.ContactListenerDeMundo;
+import es.alfmarmes.squaregame.herramientas.B2CreadorDelMundo;
+import es.alfmarmes.squaregame.herramientas.Constantes;
+import es.alfmarmes.squaregame.herramientas.ContactListenerDeMundo;
 
 public class PantallaDeJuego implements Screen {
 
@@ -187,7 +187,7 @@ public class PantallaDeJuego implements Screen {
         if (!consumiblesAparecer.isEmpty()) {
             DefObjeto idef = consumiblesAparecer.poll();
             if (idef.type == Seta.class) {
-                consumible.add(new Seta(this, idef.position.x, idef.position.y));
+                consumible.add(new Seta(this, idef.posicion.x, idef.posicion.y));
             }
         }
 

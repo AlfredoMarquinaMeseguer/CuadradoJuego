@@ -6,11 +6,11 @@ import com.badlogic.gdx.math.Vector2;
 
 import es.alfmarmes.squaregame.SquareGame;
 import es.alfmarmes.squaregame.escenas.Hud;
-import es.alfmarmes.squaregame.screens.PantallaDeJuego;
+import es.alfmarmes.squaregame.pantallas.PantallaDeJuego;
 import es.alfmarmes.squaregame.sprites.Cuadrado;
 import es.alfmarmes.squaregame.sprites.Objetos.DefObjeto;
 import es.alfmarmes.squaregame.sprites.Objetos.Seta;
-import es.alfmarmes.squaregame.tools.Constantes;
+import es.alfmarmes.squaregame.herramientas.Constantes;
 
 public class BloqueMoneda extends BloqueInteractuable {
     private static TiledMapTileSet tileSet;
