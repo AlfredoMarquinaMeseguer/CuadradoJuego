@@ -8,8 +8,14 @@ import es.alfmarmes.squaregame.screens.MenuInicio;
 import es.alfmarmes.squaregame.tools.Constantes;
 
 public class SquareGame extends Game {
-    // Utilizarlo de forma estática puede caursar errores
+    // Utilizarlo de forma estática puede causar errores
+    /**
+     * Para cargar la música y la skin del menú
+     */
     public static AssetManager manager;
+    /**
+     * Para cargar sprites
+     */
     public SpriteBatch batch;
 
     @Override

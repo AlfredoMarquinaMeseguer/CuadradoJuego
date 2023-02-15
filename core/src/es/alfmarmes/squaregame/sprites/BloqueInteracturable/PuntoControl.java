@@ -7,14 +7,24 @@ import es.alfmarmes.squaregame.sprites.Cuadrado;
 import es.alfmarmes.squaregame.tools.Constantes;
 
 public class PuntoControl extends BloqueInteractuable {
-    private PantallaDeJuego pantallaDeJuego;
+    /**
+     * Posición X de checkpoint que otorga al tocarlo
+     */
     private final float posicionX;
+
+    /**
+     * Posición Y de checkpoint que otorga al tocarlo
+     */
     private final float posicionY;
 
-
+    /**
+     * Se llama a super, se guarda la posicion de respawn que da el bloque, convierte el bloque
+     * en sensor y otorga categoría al bloque.
+     * @param pantallaDeJuego pantalla donde se encuentra el objeto
+     * @param object
+     */
     public PuntoControl(PantallaDeJuego pantallaDeJuego, MapObject object) {
         super(pantallaDeJuego, object);
-        this.pantallaDeJuego = pantallaDeJuego;
         posicionX = Constantes.escalarAppm(limites.getX() + limites.getWidth() / 2);
         posicionY = Constantes.escalarAppm(limites.getY() + limites.getHeight() / 2)
                 + Constantes.TILE;
@@ -32,7 +42,7 @@ public class PuntoControl extends BloqueInteractuable {
     @Override
     public void toque(Cuadrado jugador) {
         // Si tiene la propiedad ganar se gana el juego
-        if (objecto.getProperties().containsKey("ganar")) {
+        if (objeto.getProperties().containsKey("ganar")) {
             pantallaDeJuego.setGanado(true);
 
         } else {

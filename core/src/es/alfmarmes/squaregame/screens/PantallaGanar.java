@@ -18,12 +18,27 @@ import es.alfmarmes.squaregame.tools.Constantes;
 
 public class PantallaGanar implements Screen {
     private Viewport viewport;
+
     private Stage stage;
 
+    /**
+     * Personaje que el jugador ha elegido para jugar
+     */
     private Cuadrado.Personaje personaje;
 
+    /**
+     * Juego en el que nos encontramos
+     */
     private SquareGame game;
 
+    /**
+     * Recibe como entrada una instancia de SquareGame (el objeto principal del juego) y un objeto
+     * del tipo Cuadrado.Personaje que representa al  personaje que el jugador ha elegido para
+     * jugar. En el constructor, se crea una nueva instancia de Viewport y Stage, y se agrega el
+     * contenido de la pantalla (una tabla que contiene tres etiquetas) al escenario.
+     * @param game el objeto principal del juego.
+     * @param personaje personaje que el jugador ha elegido para jugar.
+     */
     public PantallaGanar(SquareGame game, Cuadrado.Personaje personaje) {
         this.game = game;
         this.viewport = new FitViewport(Constantes.V_ANCHO, Constantes.V_ALTO);
@@ -37,8 +52,8 @@ public class PantallaGanar implements Screen {
         table.setFillParent(true);
 
 
-        Label gameOverLabel = new Label("¡¡¡Has Ganado "+Cuadrado.nomberPersonaje(personaje)+"!!!", font);
-        Label puntuacionLabel = new Label(Hud.getScore()+" puntos", font);
+        Label gameOverLabel = new Label("¡¡¡Has Ganado " + Cuadrado.nomberPersonaje(personaje) + "!!!", font);
+        Label puntuacionLabel = new Label(Hud.getPuntuacionTotal() + " puntos", font);
         Label playAgainLabel = new Label("Click para volver al menu", font);
 
         table.add(gameOverLabel).expandX();
@@ -55,6 +70,12 @@ public class PantallaGanar implements Screen {
 
     }
 
+    /**
+     * Se llama repetidamente mientras se muestra la pantalla y se encarga de dibujar el contenido
+     * de la pantalla. Si el jugador ha tocado la pantalla, vuelve a la pantalla de inicio del
+     * juego.
+     * @param delta Tiempo en segundos desde el último renderizado.
+     */
     @Override
     public void render(float delta) {
         // Listener para volver al inicio del nivel
@@ -88,6 +109,9 @@ public class PantallaGanar implements Screen {
 
     }
 
+    /**
+     * Libera recursos que ya no se van a utilizar
+     */
     @Override
     public void dispose() {
         stage.dispose();

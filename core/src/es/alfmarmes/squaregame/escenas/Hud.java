@@ -11,7 +11,6 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import es.alfmarmes.squaregame.SquareGame;
 import es.alfmarmes.squaregame.sprites.Cuadrado;
 import es.alfmarmes.squaregame.tools.Constantes;
 
@@ -19,22 +18,22 @@ public class Hud implements Disposable {
     public Stage stage;
     private Viewport viewport;
 
-    private Integer worldTimer;
-    private float timeCount;
-    private static Integer score;
+    private static Integer contadorDeMundo;
+    private static float contarTiempo;
+    private static Integer puntuacion;
 
-    Label countdownLabel;
-    static Label scoreLabel;
+    Label labelTiempo;
+    static Label labelPuntuacion;
     Label timeLabel;
-    static Label vidasLabel;
-    Label worldLabel;
-    Label marioLabel;
+    static Label labelVidas;
+    Label labelMundo;
+    Label cuadradoLabel;
 
     //-------------------------------------Constructor-------------------------------------
     public Hud(SpriteBatch sb) {
-        this.worldTimer = 300;
-        this.timeCount = 0;
-        this.score = 0;
+        this.contadorDeMundo = 300;
+        this.contarTiempo = 0;
+        this.puntuacion = 0;
 
         this.viewport = new FitViewport(Constantes.V_ANCHO, Constantes.
                 V_ALTO, new OrthographicCamera());
@@ -51,56 +50,60 @@ public class Hud implements Disposable {
             personaje = "EDUARDO";
         }
 
-        this.countdownLabel = new Label(String.format("%03d", worldTimer),
+        this.labelTiempo = new Label(String.format("%03d", contadorDeMundo),
                 new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        scoreLabel = new Label(String.format("%06d", score),
+        labelPuntuacion = new Label(String.format("%06d", puntuacion),
                 new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         this.timeLabel = new Label("TIEMPO",
                 new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        vidasLabel = new Label(Cuadrado.VIDAS_INICIO+"",
+        labelVidas = new Label(Cuadrado.VIDAS_INICIO+"",
                 new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        this.worldLabel = new Label("TOQUES",
+        this.labelMundo = new Label("TOQUES",
                 new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        this.marioLabel = new Label(personaje,
+        this.cuadradoLabel = new Label(personaje,
                 new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
-        table.add(marioLabel).expandX().padTop(10);
-        table.add(worldLabel).expandX().padTop(10);
+        table.add(cuadradoLabel).expandX().padTop(10);
+        table.add(labelMundo).expandX().padTop(10);
         table.add(timeLabel).expandX().padTop(10);
 
         table.row();
-        table.add(scoreLabel).expandX().padTop(0);
-        table.add(vidasLabel).expandX().padTop(0);
-        table.add(countdownLabel).expandX().padTop(0);
+        table.add(labelPuntuacion).expandX().padTop(0);
+        table.add(labelVidas).expandX().padTop(0);
+        table.add(labelTiempo).expandX().padTop(0);
 
         stage.addActor(table);
     }
 
-    public static int getScore() {
-        return  score;
+    public static int getPuntuacion() {
+        return puntuacion;
+    }
+
+    public static int getPuntuacionTotal() {
+        return  puntuacion +( Integer.valueOf(labelVidas.getText().toString())*300)+(contadorDeMundo*10) ;
     }
 
     //-------------------------------------Métodos-------------------------------------
     public void update(float dt){
-        timeCount += dt;
-        if (timeCount >= 1){
-            worldTimer--;
-            countdownLabel.setText(String.format("%03d",worldTimer));
-            timeCount =0;
+        contarTiempo += dt;
+        if (contarTiempo >= 1){
+            contadorDeMundo--;
+            labelTiempo.setText(String.format("%03d", contadorDeMundo));
+            contarTiempo =0;
         }
 
     }
 
     public static void addScore(int value){
-        score += value;
-        scoreLabel.setText(String.format("%06d", score));
+        puntuacion += value;
+        labelPuntuacion.setText(String.format("%06d", puntuacion));
     }
     public static void actualizarVidas(int vidas){
-        vidasLabel.setText(String.format("%01d", vidas));
+        labelVidas.setText(String.format("%01d", vidas));
     }
 
     public boolean isTimeUp(){
-        return (worldTimer <= 0);
+        return (contadorDeMundo <= 0);
     }
 
     //-------------------------------------Métodos Override-------------------------------------

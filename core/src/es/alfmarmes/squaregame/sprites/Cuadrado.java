@@ -1,6 +1,5 @@
 package es.alfmarmes.squaregame.sprites;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -30,14 +29,15 @@ public class Cuadrado extends Sprite {
 
     /**
      * Devuelve el nombre el  personaje cuya enumeración es igual a personaje
+     *
      * @param personaje enumeración del personaje
      * @return nombre del personaje
      */
     public static String nomberPersonaje(Personaje personaje) {
         String devolver;
-        if(personaje == Personaje.ARMANDO){
+        if (personaje == Personaje.ARMANDO) {
             devolver = "ARMANDO";
-        }else {
+        } else {
             devolver = "EDUARDO";
         }
         return devolver;
@@ -47,6 +47,7 @@ public class Cuadrado extends Sprite {
     public enum Estado {
         FALLING, JUMPING, STANDING, RUNNING, MUERTO, CAMBIANDO
     }
+
     public enum Personaje {
         EDUARDO, ARMANDO
     }
@@ -58,12 +59,11 @@ public class Cuadrado extends Sprite {
     public Estado estadoAnterior;
 
 
-
     private boolean corriendoDerecha;
     private boolean tieneCasco;
     private float contadorEstado;
 
-    private boolean runGrowAnimation;
+    private boolean animacionCasco;
     private boolean decrecer;
     private boolean muerto;
     private PantallaDeJuego pantallaDeJuego;
@@ -87,12 +87,10 @@ public class Cuadrado extends Sprite {
     // Animación cambio de estado
     private Animation crecimiento;
 
-    //TODO para los checkpoints
+
     private float ultimaX;
     private float ultimaY;
 
-
-//    private Array<FireBall> fireballs;
 
     public Cuadrado(PantallaDeJuego pantallaDeJuego, Cuadrado.Personaje personaje) {
         this.pantallaDeJuego = pantallaDeJuego;
@@ -110,7 +108,7 @@ public class Cuadrado extends Sprite {
         String casco;
         personajeSeleccionado = personaje;
         if (personajeSeleccionado == Personaje.ARMANDO) {
-            this.maxSaltos = 2 ;
+            this.maxSaltos = 2;
             cuadrado = "armando";
             casco = "armando_casco";
         } else {
@@ -168,8 +166,6 @@ public class Cuadrado extends Sprite {
         definirCuadrado();
         setBounds(0, 0, Constantes.TILE, Constantes.TILE);
         setRegion(parado);
-
-        //fireballs = new Array<FireBall>();
     }
 
     //-------------------------------------Getters y setters-------------------------------------
@@ -215,7 +211,7 @@ public class Cuadrado extends Sprite {
      * Suma un salto al número de saltos
      */
     public void sumarSalto() {
-        if (numeroSaltos < maxSaltos){
+        if (numeroSaltos < maxSaltos) {
             this.numeroSaltos++;
         }
     }
@@ -224,7 +220,7 @@ public class Cuadrado extends Sprite {
      * Resta un salto al número de saltos
      */
     public void devolverSalto() {
-        if (numeroSaltos > 0){
+        if (numeroSaltos > 0) {
             this.numeroSaltos--;
         }
     }
@@ -244,20 +240,19 @@ public class Cuadrado extends Sprite {
     public void actualizar(float dt) {
 
         if (pantallaDeJuego.getHud().isTimeUp() && !isMuerto()) {
-            die();
+            morir();
         }
         setPosition(cuerpo.getPosition().x - (getWidth() / 2), cuerpo.getPosition().y - (getHeight() / 2));
         setRegion(getFrame(dt));
 
         if (decrecer) {
-            decrecer();
+            quitarCasco();
         }
     }
 
     /**
-     * Devuelve la imagen que se debe dibujar en el frame dado
-     *
-     * @param dt Tiempo deframa dado
+     * Devuelve la imagen que se debe dibujar según el frame correspondiente al tiempo dado.
+     * @param dt Tiempo de frame dado
      * @return Imagen a dibujar
      */
     private TextureRegion getFrame(float dt) {
@@ -271,7 +266,7 @@ public class Cuadrado extends Sprite {
             case CAMBIANDO:
                 region = (TextureRegion) crecimiento.getKeyFrame(contadorEstado);
                 if (crecimiento.isAnimationFinished(contadorEstado)) {
-                    runGrowAnimation = false;
+                    animacionCasco = false;
                 }
                 break;
             case JUMPING:
@@ -316,14 +311,14 @@ public class Cuadrado extends Sprite {
     }
 
     /**
-     * Calcual y devuelve el estado actual del cuadrado
+     * Calcula y devuelve el estado actual del cuadrado
      *
      * @return estado actual
      */
     private Estado getEstado() {
         if (muerto) {
             return Estado.MUERTO;
-        } else if (runGrowAnimation) {
+        } else if (animacionCasco) {
             return Estado.CAMBIANDO;
         } else if ((cuerpo.getLinearVelocity().y > 0) ||
                 (cuerpo.getLinearVelocity().y < 0 && estadoAnterior == Estado.JUMPING)) {
@@ -364,7 +359,7 @@ public class Cuadrado extends Sprite {
          */
         fdef.filter.categoryBits = Constantes.CUADRADO_BIT;
         fdef.filter.maskBits = Constantes.SUELO_BIT |
-                Constantes.COIN_BIT |
+                Constantes.MONEDA_BIT |
                 Constantes.BRICK_BIT |
                 Constantes.PINCHOS_BIT |
                 Constantes.ENEMIGO_BIT |
@@ -376,8 +371,8 @@ public class Cuadrado extends Sprite {
         cuerpo.createFixture(fdef).setUserData(this);
 
         EdgeShape head = new EdgeShape();
-        head.set(new Vector2( Constantes.escalarAppm(-2), Constantes.escalarAppm(7)),
-                new Vector2(Constantes.escalarAppm(2) , Constantes.escalarAppm(7) ));
+        head.set(new Vector2(Constantes.escalarAppm(-2), Constantes.escalarAppm(7)),
+                new Vector2(Constantes.escalarAppm(2), Constantes.escalarAppm(7)));
 
 
         fdef.filter.categoryBits = Constantes.CABEZA_CUADRADO_BIT;
@@ -388,25 +383,33 @@ public class Cuadrado extends Sprite {
 
     }
 
-    public void grow() {
+    /**
+     * Otorga un casco al personaje. Si ya lo tiene puesto, te da un toque extra.
+     */
+    public void otorgarCasco() {
         if (!tieneCasco) {
-            runGrowAnimation = true;
+            animacionCasco = true;
             tieneCasco = true;
             SquareGame.manager.get(Constantes.R_MEJORA).play();
         } else {
-            Hud.actualizarVidas(vidas);
             vidas++;
+            Hud.actualizarVidas(vidas);
         }
     }
 
-    public void decrecer() {
-        runGrowAnimation = true;
+    /**
+     * Quita el casco al personaje
+     */
+    public void quitarCasco() {
+        animacionCasco = true;
         tieneCasco = false;
         SquareGame.manager.get(Constantes.R_QUITAR_CASCO).play();
     }
 
-    public void die() {
-        Gdx.app.log("Hola",vidas+", "+muerto);
+    /**
+     * Mata o quita un toque al personaje
+     */
+    public void morir() {
         if (!muerto && (vidas == 0 || pantallaDeJuego.getHud().isTimeUp())) {
 
             SquareGame.manager.get(Constantes.R_MUSICA).stop();
@@ -422,25 +425,22 @@ public class Cuadrado extends Sprite {
             cuerpo.applyLinearImpulse(new Vector2(0, 4f), cuerpo.getWorldCenter(), true);
         } else {
             SquareGame.manager.get(Constantes.R_DANNO).play();
-            Hud.actualizarVidas(vidas);
-          vidas --;
-          setPosition(ultimaX, ultimaY);
+            vidas--;
+            setPosition(ultimaX, ultimaY);
         }
+        Hud.actualizarVidas(vidas);
     }
 
-    public void hit() {
-        /*if(enemy instanceof Turtle && ((Turtle) enemy).currentState == Turtle.State.STANDING_SHELL)
-            ((Turtle) enemy).kick(enemy.b2body.getPosition().x > b2body.getPosition().x ? Turtle.KICK_RIGHT : Turtle.KICK_LEFT);
-        else {*/
+    /**
+     * Golpea al personaje
+     */
+    public void golpe() {
         if (tieneCasco) {
-            decrecer();
+            quitarCasco();
         } else {
-            die();
+            morir();
         }
         devolverSalto();
-
-
-//        }
     }
 
 }

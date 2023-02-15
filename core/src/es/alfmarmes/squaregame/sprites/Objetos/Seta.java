@@ -31,7 +31,7 @@ public class Seta extends Objeto {
 
         fdef.filter.categoryBits = Constantes.OBJETO_BIT;
         fdef.filter.maskBits = Constantes.SUELO_BIT
-                | Constantes.COIN_BIT
+                | Constantes.MONEDA_BIT
                 | Constantes.BRICK_BIT
                 | Constantes.PINCHOS_BIT
                 | Constantes.CUADRADO_BIT;
@@ -43,7 +43,7 @@ public class Seta extends Objeto {
     @Override
     public void use(Cuadrado jugador) {
         destroy();
-        jugador.grow();
+        jugador.otorgarCasco();
     }
 
     @Override

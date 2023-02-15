@@ -21,7 +21,7 @@ public class BloqueMoneda extends BloqueInteractuable {
         super(pantallaDeJuego, objeto);
         fixture.setUserData(this);
         tileSet = mapa.getTileSets().getTileSet(RUTA_TILESET);
-        setFiltroDeCategoria(Constantes.COIN_BIT);
+        setFiltroDeCategoria(Constantes.MONEDA_BIT);
     }
 
     @Override
@@ -29,7 +29,7 @@ public class BloqueMoneda extends BloqueInteractuable {
         if (getCell().getTile().getId() == BLOQUE_VACIO_ID)
             SquareGame.manager.get(Constantes.R_CHOQUE).play();
         else {
-            if (objecto.getProperties().containsKey("seta")) {
+            if (objeto.getProperties().containsKey("seta")) {
                 pantallaDeJuego.spawnItem(new DefObjeto(new Vector2(cuerpo.getPosition().x,
                         cuerpo.getPosition().y + Constantes.TILE),
                         Seta.class));

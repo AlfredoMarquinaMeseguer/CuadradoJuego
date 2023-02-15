@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 
 import es.alfmarmes.squaregame.SquareGame;
+import es.alfmarmes.squaregame.escenas.Hud;
 import es.alfmarmes.squaregame.screens.PantallaDeJuego;
 import es.alfmarmes.squaregame.tools.Constantes;
 
@@ -90,7 +91,7 @@ public class Triangulo extends Enemigo {
 
         fdef.filter.categoryBits = Constantes.ENEMIGO_BIT;
         fdef.filter.maskBits = Constantes.SUELO_BIT
-                | Constantes.COIN_BIT
+                | Constantes.MONEDA_BIT
                 | Constantes.BRICK_BIT
                 | Constantes.PINCHOS_BIT
                 | Constantes.CUADRADO_BIT
@@ -128,9 +129,10 @@ public class Triangulo extends Enemigo {
     }
 
     @Override
-    public void onHitOnHead() {
+    public void pisado() {
         porDestruir = true;
         destruido = false;
         SquareGame.manager.get(Constantes.R_BONK).play();
+        Hud.addScore(200);
     }
 }

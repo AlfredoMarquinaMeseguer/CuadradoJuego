@@ -29,7 +29,7 @@ public abstract class Enemigo extends Sprite {
 
     public abstract void update(float dt);
 
-    public abstract void onHitOnHead();
+    public abstract void pisado();
 
     public boolean isPorDestruir() {
         return porDestruir;

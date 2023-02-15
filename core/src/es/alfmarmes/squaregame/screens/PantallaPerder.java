@@ -1,6 +1,5 @@
 package es.alfmarmes.squaregame.screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -17,7 +16,7 @@ import es.alfmarmes.squaregame.SquareGame;
 import es.alfmarmes.squaregame.sprites.Cuadrado;
 import es.alfmarmes.squaregame.tools.Constantes;
 
-public class GameOverScreen implements Screen {
+public class PantallaPerder implements Screen {
 
     private final Cuadrado.Personaje personaje;
     private Viewport viewport;
@@ -25,7 +24,7 @@ public class GameOverScreen implements Screen {
 
     private SquareGame game;
 
-    public GameOverScreen(SquareGame game, Cuadrado.Personaje personajeSeleccionado) {
+    public PantallaPerder(SquareGame game, Cuadrado.Personaje personajeSeleccionado) {
         this.game = game;
         this.viewport = new FitViewport(Constantes.V_ANCHO, Constantes.V_ALTO);
         this.stage = new Stage(this.viewport, game.batch);
@@ -37,8 +36,8 @@ public class GameOverScreen implements Screen {
         table.center();
         table.setFillParent(true);
 
-        Label gameOverLabel = new Label("GAME OVER", font);
-        Label playAgainLabel = new Label("Click to Play Again", font);
+        Label gameOverLabel = new Label("HAS PERDIDO", font);
+        Label playAgainLabel = new Label("Haz click para volver a intentarlo", font);
 
         table.add(gameOverLabel).expandX();
         table.row();

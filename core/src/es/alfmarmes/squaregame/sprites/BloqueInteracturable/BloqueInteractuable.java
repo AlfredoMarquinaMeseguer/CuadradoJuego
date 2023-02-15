@@ -3,7 +3,6 @@ package es.alfmarmes.squaregame.sprites.BloqueInteracturable;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -26,7 +25,7 @@ public abstract class BloqueInteractuable {
     /**
      * Objecto dado por Tiled
      */
-    protected MapObject objecto;
+    protected MapObject objeto;
     /**
      * Mundo de en el que existe el bloque
      */
@@ -50,61 +49,55 @@ public abstract class BloqueInteractuable {
     protected Fixture fixture;
 
 
-    // Borrar si no se usa
-    public BloqueInteractuable(PantallaDeJuego pantallaDeJuego, Rectangle limites) {
-        this.pantallaDeJuego = pantallaDeJuego;
-        this.mundo = pantallaDeJuego.getMundo();
-        this.mapa = pantallaDeJuego.getMap();
-        this.limites = limites;
 
-        BodyDef bdef = new BodyDef();
-        FixtureDef fdef = new FixtureDef();
-        PolygonShape shape = new PolygonShape();
 
-        bdef.type = BodyDef.BodyType.StaticBody;
-        bdef.position.set(Constantes.escalarAppm(limites.getX() + limites.getWidth() / 2),
-                Constantes.escalarAppm(limites.getY() + limites.getHeight() / 2));
-
-        cuerpo = mundo.createBody(bdef);
-
-        shape.setAsBox(  Constantes.escalarAppm(limites.getWidth() / 2),
-                Constantes.escalarAppm(limites.getHeight() / 2));
-        fdef.shape = shape;
-
-        fixture = cuerpo.createFixture(fdef);
-    }
 
     //// Constructor
     /**
-     * Constructor asigna la pantalla de juego, el mundo
-     * @param pantallaDeJuego
-     * @param objecto
+     * Constructor asigna los campos y llama a deifnirFisica
+     * @param pantallaDeJuego pantalla en la que se encuentra el bloque
+     * @param objeto creado por tiled, contiene la posición y tamaño, entre otras cosas
      */
-    public BloqueInteractuable(PantallaDeJuego pantallaDeJuego, MapObject objecto) {
+    public BloqueInteractuable(PantallaDeJuego pantallaDeJuego, MapObject objeto) {
         this.pantallaDeJuego = pantallaDeJuego;
         this.mundo = pantallaDeJuego.getMundo();
         this.mapa = pantallaDeJuego.getMap();
-        this.limites = ((RectangleMapObject) objecto).getRectangle();
-        this.objecto = objecto;
+        this.limites = ((RectangleMapObject) objeto).getRectangle();
+        this.objeto = objeto;
         definirFisica();
     }
 
+
     //// Métodos constructores
-    private void  definirFisica(){
+    /**
+     * Define la física de un objeto en un mundo de Box2D en LibGDX.
+     * La posición y tipo de cuerpo se define a través de un objeto BodyDef,
+     * la forma se define a través de un objeto PolygonShape y las propiedades
+     * de la forma se definen a través de un objeto FixtureDef. Luego se crea
+     * un cuerpo en el mundo y se crea una fixture con la forma definida.
+     */
+    private void definirFisica() {
+        // Se crean los objetos BodyDef, FixtureDef y PolygonShape
         BodyDef bdef = new BodyDef();
         FixtureDef fdef = new FixtureDef();
         PolygonShape shape = new PolygonShape();
 
+        // Se define el tipo de cuerpo como estático y se establece la posición
+        // del centro del objeto en el mundo.
         bdef.type = BodyDef.BodyType.StaticBody;
         bdef.position.set(Constantes.escalarAppm(limites.getX() + limites.getWidth() / 2),
                 Constantes.escalarAppm(limites.getY() + limites.getHeight() / 2));
 
+        // Se crea un cuerpo en el mundo y se asigna a la variable de clase 'cuerpo'.
         cuerpo = mundo.createBody(bdef);
 
+        // Se define la forma del objeto como un cuadrado y se establecen sus
+        // propiedades a través del objeto FixtureDef.
         shape.setAsBox(Constantes.escalarAppm(limites.getWidth() / 2),
                 Constantes.escalarAppm(limites.getHeight() / 2));
         fdef.shape = shape;
 
+        // Se crea una fixture en el cuerpo con las propiedades definidas en fdef.
         fixture = cuerpo.createFixture(fdef);
     }
 

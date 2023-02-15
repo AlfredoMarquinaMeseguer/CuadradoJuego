@@ -32,10 +32,6 @@ public class Constantes {
      */
     public static final float TILE = PIXELS_TILE / PPM;
 
-    /**
-     * Nombre del programa
-     */
-    public static final String APP = "squareGame";
     //// Bits de colisiones
     /**
      * Bit para no colisionar
@@ -56,7 +52,7 @@ public class Constantes {
     /**
      * Bit categoría de los bloques de de objetos
      */
-    public static final short COIN_BIT = 8;
+    public static final short MONEDA_BIT = 8;
     /**
      * Bit categoría bloque rotos
      */
@@ -88,43 +84,43 @@ public class Constantes {
 
 
     /**
-     * Música del menu
+     * Música del nivel
      */
-    public final static AssetDescriptor<Music> R_MUSICA = new AssetDescriptor<Music>
+    public final static AssetDescriptor<Music> R_MUSICA = new AssetDescriptor<>
             ("audio/music/numb.mp3", Music.class);
     /**
      * Música del menu
      */
-    public final static AssetDescriptor<Music> R_MUSICA_MENU = new AssetDescriptor<Music>
+    public final static AssetDescriptor<Music> R_MUSICA_MENU = new AssetDescriptor<>
             ("audio/music/in_the_end.mp3", Music.class);
     /**
      * Efecto de sonido al golpear bloque moneda
      */
-    public final static AssetDescriptor<Sound> R_MONEDA = new AssetDescriptor<Sound>
+    public final static AssetDescriptor<Sound> R_MONEDA = new AssetDescriptor<>
             ("audio/sounds/coin.wav", Sound.class);
 
     /**
      * Efecto sonido golpear bloque vacio.
      */
-    public final static AssetDescriptor<Sound> R_CHOQUE = new AssetDescriptor<Sound>
+    public final static AssetDescriptor<Sound> R_CHOQUE = new AssetDescriptor<>
             ("audio/sounds/bump.wav", Sound.class);
 
     /**
      * Efecto de sonido romper bloque.
      */
-    public final static AssetDescriptor<Sound> R_ROMPER_BLOQUE = new AssetDescriptor<Sound>
+    public final static AssetDescriptor<Sound> R_ROMPER_BLOQUE = new AssetDescriptor<>
             ("audio/sounds/breakblock.wav", Sound.class);
 
     /**
      * Efecto de sonido matar triangulos.
      */
-    public final static AssetDescriptor<Sound> R_BONK = new AssetDescriptor<Sound>
+    public final static AssetDescriptor<Sound> R_BONK = new AssetDescriptor<>
             ("audio/sounds/crit.mp3", Sound.class);
 
     /**
      * Efecto de sonido aparece el casco.
      */
-    public final static AssetDescriptor<Sound> R_MEJORA_APARECE = new AssetDescriptor<Sound>
+    public final static AssetDescriptor<Sound> R_MEJORA_APARECE = new AssetDescriptor<>
             ("audio/sounds/powerup_spawn.wav", Sound.class);
 
     /**
@@ -136,23 +132,23 @@ public class Constantes {
     /**
      * Efecto de sonido romper casco.
      */
-    public final static AssetDescriptor<Sound> R_QUITAR_CASCO = new AssetDescriptor<Sound>
+    public final static AssetDescriptor<Sound> R_QUITAR_CASCO = new AssetDescriptor<>
             ("audio/sounds/damage.wav", Sound.class);
     /**
      * Efecto de sonido recibir dañon sin casco.
      */
-    public final static AssetDescriptor<Sound> R_DANNO = new AssetDescriptor<Sound>
+    public final static AssetDescriptor<Sound> R_DANNO = new AssetDescriptor<>
             ("audio/sounds/oof.mp3", Sound.class);
     /**
      * Efecto de sonido de muerte.
      */
-    public final static AssetDescriptor<Sound> R_MUERTE = new AssetDescriptor<Sound>
+    public final static AssetDescriptor<Sound> R_MUERTE = new AssetDescriptor<>
             ("audio/sounds/muerte.mp3", Sound.class);
 
     /**
      * Descrición del tema del menú.
      */
-    public static final AssetDescriptor<Skin> SKIN = new AssetDescriptor<Skin>("skin/pixthulhu-ui.json", Skin.class,
+    public static final AssetDescriptor<Skin> SKIN = new AssetDescriptor<>("skin/pixthulhu-ui.json", Skin.class,
             new SkinLoader.SkinParameter("skin/pixthulhu-ui.atlas"));
 
     /**

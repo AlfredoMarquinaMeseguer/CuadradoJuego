@@ -11,7 +11,6 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Box2D;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 
 import com.badlogic.gdx.physics.box2d.World;
@@ -134,7 +133,7 @@ public class PantallaDeJuego implements Screen {
         //Actualizar posición del jugador
         jugador.actualizar(dt);
         // Actualizar a los enemigo (Goombas)
-        for (Enemigo enemigo : creadorDelMundo.getGoombas()) {
+        for (Enemigo enemigo : creadorDelMundo.getTriangulos()) {
             enemigo.update(dt);
             if (enemigo.getX() < jugador.getX() + (224 * Constantes.ESCALAR_PPM)) {
                 enemigo.cuerpo.setActive(true);
@@ -211,7 +210,7 @@ public class PantallaDeJuego implements Screen {
         game.batch.begin();
         jugador.draw(game.batch);
         // Dibujar enemigos
-        for (Enemigo enemigo : creadorDelMundo.getGoombas()) {
+        for (Enemigo enemigo : creadorDelMundo.getTriangulos()) {
             enemigo.draw(game.batch);
         }
 
@@ -242,7 +241,7 @@ public class PantallaDeJuego implements Screen {
 
     private void perder() {
         SquareGame.manager.get(Constantes.R_MUSICA).stop();
-        game.setScreen(new GameOverScreen(game, Cuadrado.personajeSeleccionado));
+        game.setScreen(new PantallaPerder(game, Cuadrado.personajeSeleccionado));
         dispose();
     }
 

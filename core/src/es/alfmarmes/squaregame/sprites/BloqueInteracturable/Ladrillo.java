@@ -11,12 +11,6 @@ import es.alfmarmes.squaregame.tools.Constantes;
 
 public class Ladrillo extends BloqueInteractuable {
 
-    // Borrar si no se usa
-    public Ladrillo(PantallaDeJuego pantallaDeJuego, Rectangle bounds) {
-        super(pantallaDeJuego, bounds);
-        fixture.setUserData(this);
-        setFiltroDeCategoria(Constantes.BRICK_BIT);
-    }
 
     public Ladrillo(PantallaDeJuego pantallaDeJuego, MapObject objeto) {
         super(pantallaDeJuego,objeto);
